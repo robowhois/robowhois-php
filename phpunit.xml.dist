@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit backupGlobals="true"
+         bootstrap="vendor/.composer/autoload.php"
+         backupStaticAttributes="false"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         forceCoversAnnotation="false"
+         mapTestClassNameToCoveredClassName="false"
+         processIsolation="false"
+         stopOnError="false"
+         stopOnFailure="false"
+         stopOnIncomplete="false"
+         stopOnSkipped="false"
+         syntaxCheck="false"
+         testSuiteLoaderClass="PHPUnit_Runner_StandardTestSuiteLoader"
+         strict="false"
+         verbose="false">
+
+    <testsuites>
+      <testsuite name="Main tests">
+          <directory >test</directory>
+      </testsuite>
+    </testsuites>
+
+    <filter>
+      <blacklist>
+        <directory suffix=".php">test</directory>
+        <directory suffix=".php">src</directory>
+      </blacklist>
+    </filter>
+</phpunit>
