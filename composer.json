@@ -3,6 +3,7 @@
     "type": "library",
     "description": "PHP SDK for Robowhois APIs.",
     "keywords": ["robowhois"],
+    "license": "MIT",
     "authors": [
         {
             "name": "Alessandro Nadalin",
