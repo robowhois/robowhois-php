@@ -23,6 +23,9 @@
       <testsuite name="http">
           <directory >test/Http</directory>
       </testsuite>
+      <testsuite name="Robowhois">
+          <file>test/RobowhoisTest.php</file>
+      </testsuite>
     </testsuites>
 
     <filter>
