@@ -21,7 +21,7 @@
 
     <testsuites>
       <testsuite name="Main tests">
-          <directory >test</directory>
+          <directory >test/Http</directory>
       </testsuite>
     </testsuites>
 
