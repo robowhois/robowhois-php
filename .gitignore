@@ -5,3 +5,5 @@ composer.phar
 vendor/
 test/.token
 nbproject
+docs/html
+docs/latex

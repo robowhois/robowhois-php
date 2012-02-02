@@ -23,6 +23,8 @@ namespace Robowhois\Contract\Http;
 interface Client
 {
   /**
+   * Executes a GET request on the specified $uri and returns an HTTP response.
+   * 
    * @return \Symfony\Component\HttpFoundation\Response;
    */
   public function get($uri);
