@@ -25,37 +25,40 @@ use Robowhois\Http\Client;
 
 class StubResponse
 {
-  public function getContent()
-  {
-    return "";
-  }
-  
-  public function getStatusCode()
-  {
-    return 200;
-  }
-  
-  public function getHeaders()
-  {
-    return array();
-  }
+    public function getContent()
+    {
+        return "";
+    }
+
+    public function getStatusCode()
+    {
+        return 200;
+    }
+
+    public function getHeaders()
+    {
+        return array();
+    }
 }
 
 class StubBrowser extends \Buzz\Browser
 {
-  public function get($url, $headers = array())
-  {
-    return new StubResponse();
-  }
+    public function get($url, $headers = array())
+    {
+        return new StubResponse();
+    }
 }
 
 class ClientTest extends \PHPUnit_Framework_TestCase
 {
-  public function testTheClientReturnsAResponse()
-  {
-    $client = new Client("...", new StubBrowser());
-    
-    $this->assertInstanceOf("\Symfony\Component\HttpFoundation\Response", $client->get('http://www.google.com'));
-  }
+    public function testTheClientReturnsAResponse()
+    {
+        $client = new Client("...", new StubBrowser());
+
+        $this->assertInstanceOf(
+                "\Symfony\Component\HttpFoundation\Response",
+                $client->get('http://www.google.com')
+        );
+    }
 }
 

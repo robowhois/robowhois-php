@@ -26,29 +26,29 @@ use Buzz\Browser;
 
 class ClientTest extends \PHPUnit_Framework_TestCase
 {
-  public function testRetrievingANonAuthenticatedResponse()
-  {
-    $client   = new Client("dummyApiKey", new Browser());
-    $response = $client->get("http://api.robowhois.com/account");
-    
-    $this->assertInstanceOf("\Symfony\Component\HttpFoundation\Response", $response);
-    $this->assertEquals(401, $response->getStatusCode());
-  }
-  
-  public function testRetrievingAnAuthenticatedResponseForTheAccountAPI()
-  {
-    $client   = new Client($this->getApiKey(), new Browser());
-    $response = $client->get("http://api.robowhois.com/account");
-    
-    $this->assertInstanceOf("\Symfony\Component\HttpFoundation\Response", $response);
-    $this->assertEquals(200, $response->getStatusCode());
-  }
-  
-  protected function getApiKey()
-  {
-    $apiKey =  file_get_contents(__DIR__ . "/../../.token");
-    
-    return $apiKey;
-  }
+    public function testRetrievingANonAuthenticatedResponse()
+    {
+      $client   = new Client("dummyApiKey", new Browser());
+      $response = $client->get("http://api.robowhois.com/account");
+
+      $this->assertInstanceOf("\Symfony\Component\HttpFoundation\Response", $response);
+      $this->assertEquals(401, $response->getStatusCode());
+    }
+
+    public function testRetrievingAnAuthenticatedResponseForTheAccountAPI()
+    {
+      $client   = new Client($this->getApiKey(), new Browser());
+      $response = $client->get("http://api.robowhois.com/account");
+
+      $this->assertInstanceOf("\Symfony\Component\HttpFoundation\Response", $response);
+      $this->assertEquals(200, $response->getStatusCode());
+    }
+
+    protected function getApiKey()
+    {
+      $apiKey =  file_get_contents(__DIR__ . "/../../.token");
+
+      return $apiKey;
+    }
 }
 
