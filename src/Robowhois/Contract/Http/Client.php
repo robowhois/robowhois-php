@@ -13,8 +13,8 @@
 /**
  * Class Client
  *
- * @package     
- * @subpackage  
+ * @package     Robowhois
+ * @subpackage  Http
  * @author      Alessandro Nadalin <alessandro.nadalin@gmail.com>
  */
 
@@ -22,9 +22,11 @@ namespace Robowhois\Contract\Http;
 
 interface Client
 {
-  /**
-   * @return \Symfony\Component\HttpFoundation\Response;
-   */
-  public function get($uri);
+    /**
+    * Executes a GET request on the specified $uri and returns an HTTP response.
+    * 
+    * @return \Symfony\Component\HttpFoundation\Response;
+    */
+    public function get($uri);
 }
 

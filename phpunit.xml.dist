@@ -20,8 +20,8 @@
          verbose="false">
 
     <testsuites>
-      <testsuite name="Main tests">
-          <directory >test</directory>
+      <testsuite name="http">
+          <directory >test/Http</directory>
       </testsuite>
     </testsuites>
 
