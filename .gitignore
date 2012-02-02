@@ -4,3 +4,4 @@ spike.php
 composer.phar
 vendor/
 test/.token
+nbproject
