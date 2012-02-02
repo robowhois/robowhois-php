@@ -28,15 +28,19 @@ use Symfony\Component\HttpFoundation\Response;
 class Client implements HttpClient
 {
   protected $adapter;
+  protected $apiKey;
   
   /**
    * Creates a new instance of an HTTP client customized for Robowhois APIs.
    *
-   * @param Browser $adapter The HTTP adapter used to make HTTP requests
+   * @param string  $apiKey   The api key of Robowhois
+   * @param Browser $adapter  The HTTP adapter used to make HTTP requests
    */
-  public function __construct(Browser $adapter)
+  public function __construct($apiKey, Browser $adapter)
   {
-      $this->adapter = $adapter;
+      $this->adapter  = $adapter;
+      $this->apiKey   = $apiKey;
+      $this->configureAdapter();
   }
   
   /**
@@ -44,14 +48,26 @@ class Client implements HttpClient
    */
   public function get($uri)
   {
-      $response     = $this->getAdapter()->get($uri);
-      $httpResponse = new Response(
-              $response->getContent(), 
-              $response->getStatusCode(), 
-              $response->getHeaders()
-      );
+      $response = $this->getAdapter()->get($uri);
       
-      return $httpResponse;
+      return new Response(
+          $response->getContent(), 
+          $response->getStatusCode(), 
+          $response->getHeaders()
+      );
+  }
+  
+  /**
+   * Configures the adapter for authentication against the Robowhois API. 
+   */
+  protected function configureAdapter()
+  {
+      $this->getAdapter()->setClient(new \Buzz\Client\Curl);
+      curl_setopt(
+          $this->getAdapter()->getClient()->getCurl(),
+          CURLOPT_USERPWD,
+          $this->getApiKey() . ":X"
+      );
   }
   
   /**
@@ -62,6 +78,16 @@ class Client implements HttpClient
   protected function getAdapter()
   {
       return $this->adapter;
+  }
+  
+  /**
+   * Returns the API key for this session.
+   * 
+   * @return string
+   */
+  protected function getApiKey()
+  {
+      return $this->apiKey;
   }
 }
 

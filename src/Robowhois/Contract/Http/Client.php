@@ -13,8 +13,8 @@
 /**
  * Class Client
  *
- * @package     
- * @subpackage  
+ * @package     Robowhois
+ * @subpackage  Http
  * @author      Alessandro Nadalin <alessandro.nadalin@gmail.com>
  */
 

@@ -13,11 +13,13 @@
 /**
  * Class ClientTest
  *
- * @package     
- * @subpackage  
+ * @package     Robowhois
+ * @subpackage  Test
  * @author      Alessandro Nadalin <alessandro.nadalin@gmail.com>
  * @author      David Funaro <ing.davidino@gmail.com>
  */
+
+namespace test;
 
 use Robowhois\Http\Client;
 
@@ -39,7 +41,7 @@ class Response
   }
 }
 
-class Browser extends Buzz\Browser
+class Browser extends \Buzz\Browser
 {
   public function get($url, $headers = array())
   {
@@ -51,7 +53,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 {
   public function testTheClientReturnsAResponse()
   {
-    $client = new Client(new Browser());
+    $client = new Client("...", new Browser());
     
     $this->assertInstanceOf("\Symfony\Component\HttpFoundation\Response", $client->get('http://www.google.com'));
   }
