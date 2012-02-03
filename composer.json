@@ -19,7 +19,8 @@
     "autoload": {
         "psr-0": {
             "Robowhois": "src/",
-            "Stub" : "test/"
+            "Stub" : "test/",
+            "test" : ""
         }
     },
     "require": {

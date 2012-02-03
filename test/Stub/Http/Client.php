@@ -23,6 +23,11 @@ use \Symfony\Component\HttpFoundation\Response;
 
 class Client implements ClientInterface
 {
+    public function authenticate($apiKey)
+    {
+        
+    }
+    
     /**
      * @param string $uri
      *  
@@ -31,7 +36,7 @@ class Client implements ClientInterface
     public function get($uri)
     {
         $headers = array();
-        $file    = file_get_contents(__DIR__ . '/../../bin/'.$uri);
+        $file    = file_get_contents(__DIR__ . '/../../bin/'.str_replace("http://api.robowhois.com/whois/", null, $uri));
         $parts   = explode('***', $file);
         
         $statusCode = $parts[0];

@@ -23,12 +23,13 @@ namespace test\Integration;
 
 use Robowhois\Http\Client;
 use Buzz\Browser;
+use test\TestCase;
 
-class ClientTest extends \PHPUnit_Framework_TestCase
+class ClientTest extends TestCase
 {
     public function testRetrievingANonAuthenticatedResponse()
     {
-      $client   = new Client("dummyApiKey", new Browser());
+      $client   = new Client(new Browser());
       $response = $client->get("http://api.robowhois.com/account");
 
       $this->assertInstanceOf("\Symfony\Component\HttpFoundation\Response", $response);
@@ -37,18 +38,12 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
     public function testRetrievingAnAuthenticatedResponseForTheAccountAPI()
     {
-      $client   = new Client($this->getApiKey(), new Browser());
+      $client   = new Client(new Browser());
+      $client->authenticate($this->getApiKey());
       $response = $client->get("http://api.robowhois.com/account");
 
       $this->assertInstanceOf("\Symfony\Component\HttpFoundation\Response", $response);
       $this->assertEquals(200, $response->getStatusCode());
-    }
-
-    protected function getApiKey()
-    {
-      $apiKey =  file_get_contents(__DIR__ . "/../../.token");
-
-      return $apiKey;
     }
 }
 

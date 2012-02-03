@@ -36,11 +36,24 @@ class Client implements HttpClient
     * @param string  $apiKey   The api key of Robowhois
     * @param Browser $adapter  The HTTP adapter used to make HTTP requests
     */
-    public function __construct($apiKey, Browser $adapter)
+    public function __construct(Browser $adapter)
     {
         $this->adapter  = $adapter;
-        $this->apiKey   = $apiKey;
         $this->configureAdapter();
+    }
+    
+    /**
+    * @inheritedDoc
+    */
+    public function authenticate($apiKey)
+    {
+        $this->apiKey = $apiKey;
+        
+        curl_setopt(
+            $this->getAdapter()->getClient()->getCurl(),
+            CURLOPT_USERPWD,
+            $this->getApiKey() . ":X"
+        );
     }
   
     /**
@@ -63,11 +76,6 @@ class Client implements HttpClient
     protected function configureAdapter()
     {
         $this->getAdapter()->setClient(new \Buzz\Client\Curl);
-        curl_setopt(
-            $this->getAdapter()->getClient()->getCurl(),
-            CURLOPT_USERPWD,
-            $this->getApiKey() . ":X"
-        );
     }
   
     /**

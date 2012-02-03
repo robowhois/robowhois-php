@@ -24,8 +24,11 @@ use Robowhois\Whois\Index;
 
 class Robowhois
 {
-    private $key;
+    private $apiKey;
     private $client;
+    
+    const API_ENTRY_POINT       = "http://api.robowhois.com";
+    const API_INDEX_ENDPOINT    = "/whois/:domain";
     
     /**
      * Instantiates a new Robowhois object with the given $apiKey
@@ -36,22 +39,34 @@ class Robowhois
      */
     public function __construct($apiKey, Client $client)
     {
-        $this->key    = $apiKey;
+        $this->apiKey = $apiKey;
         $this->client = $client;
     }
     
     /**
      * Retrieves the raw information about a whois record.
      * 
-     * @param string $uri
+     * @param string $domain
      * 
      * @return Robowhois\Whois\Index
      */
-    public function whoisIndex($uri)
+    public function whoisIndex($domain)
     {
-        $response = $this->client->get($uri);
+        $this->getClient()->authenticate($this->getApiKey());
+        $uri        = self::API_ENTRY_POINT . str_replace(":domain", $domain, self::API_INDEX_ENDPOINT);
+        $response   = $this->getClient()->get($uri);
         
         return new Index($response->getContent());
+    }
+    
+    protected function getApiKey()
+    {
+        return $this->apiKey;
+    }
+    
+    protected function getClient()
+    {
+        return $this->client;
     }
 }
 

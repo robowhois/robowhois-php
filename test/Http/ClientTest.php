@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Orient package.
+ * This file is part of the Robowhois package.
  *
  * (c) Alessandro Nadalin <alessandro.nadalin@gmail.com>
  * (c) David Funaro <ing.davidino@gmail.com>
@@ -53,7 +53,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 {
     public function testTheClientReturnsAResponse()
     {
-        $client = new Client("...", new StubBrowser());
+        $client = new Client(new StubBrowser());
 
         $this->assertInstanceOf(
                 "\Symfony\Component\HttpFoundation\Response",

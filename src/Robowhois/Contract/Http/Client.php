@@ -23,6 +23,12 @@ namespace Robowhois\Contract\Http;
 interface Client
 {
     /**
+    * Sets the authentication key for performing API requests for the HTTP
+    * client.
+    */
+    public function authenticate($apiKey);
+    
+    /**
     * Executes a GET request on the specified $uri and returns an HTTP response.
     * 
     * @return \Symfony\Component\HttpFoundation\Response;

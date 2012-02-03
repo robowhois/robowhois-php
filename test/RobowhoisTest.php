@@ -23,18 +23,13 @@ use Robowhois\Robowhois;
 use Stub\Http\Client;
 
 class RobowhoisTest extends PHPUnit_Framework_TestCase
-{
-    public function setup()
-    {
-        $this->token = file_get_contents("test/.token");
-    }
-    
+{   
     public function testARegisteredDomain()
     {
         $domain     = 'www.index.com';
         $filePath   = __DIR__.'/bin/'. $domain;
         
-        $robowhois  = new Robowhois($this->token, new Client);
+        $robowhois  = new Robowhois("aaa", new Client);
         $index      = $robowhois->whoisIndex($domain);
         
         ob_start();
