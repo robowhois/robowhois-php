@@ -39,6 +39,7 @@ class ClientTest extends TestCase
     public function testRetrievingAnAuthenticatedResponseForTheAccountAPI()
     {
       $client   = new Client(new Browser());
+
       $client->authenticate($this->getApiKey());
       $response = $client->get("http://api.robowhois.com/account");
 

@@ -24,6 +24,7 @@ namespace test\Integration;
 use test\TestCase;
 use Robowhois\Robowhois;
 use Robowhois\Http\Client;
+use Stub\Http\Client as StubClient;
 use Buzz\Browser;
 
 class RobowhoisTest extends TestCase
@@ -33,9 +34,8 @@ class RobowhoisTest extends TestCase
         $domain                 = "robowhois.com";
         $robowhois              = new Robowhois($this->getApiKey(), new Client(new Browser));
         $index                  = $robowhois->whoisIndex($domain);
-        $robowhoisDotComWHOIS   = file_get_contents(__DIR__ . "/../bin/" . $domain);
 
-        $this->assertEquals($index->getContent(), $robowhoisDotComWHOIS);
+        $this->assertEquals($index->getContent(),  StubClient::getContent($domain));
         $this->assertInstanceOf('Robowhois\Whois\Index', $index);
     }
 }

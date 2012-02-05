@@ -38,7 +38,7 @@ class RobowhoisTest extends PHPUnit_Framework_TestCase
         ob_end_clean();
         
         $fileContents = file_get_contents($filePath);
-        $fileContents = Client::stripMetaInfo($filePath);
+        $fileContents = Client::getContent($domain);
         
         $this->assertEquals($content,$fileContents);
         $this->assertInstanceOf('Robowhois\Whois\Index', $index);

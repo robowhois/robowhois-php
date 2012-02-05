@@ -54,7 +54,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     public function testTheClientReturnsAResponse()
     {
         $client = new Client(new StubBrowser());
-
+                
         $this->assertInstanceOf(
                 "\Symfony\Component\HttpFoundation\Response",
                 $client->get('http://www.google.com')
