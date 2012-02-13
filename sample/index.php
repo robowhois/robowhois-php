@@ -5,7 +5,7 @@ use Robowhois\Exception;
 
 require 'vendor/.composer/autoload.php';
 
-$robowhois = new Robowhois('custom-robowhois-phpclient');
+$robowhois = new Robowhois('INSERT-YOUR-API-KEY-HERE');
 
 try
 {
