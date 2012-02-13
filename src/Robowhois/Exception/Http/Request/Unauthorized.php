@@ -28,8 +28,10 @@ class Unauthorized extends ResponseException
     const MESSAGE = "The request made with the API key \"%s\" has been rejected: is the key valid?";
     
     /**
+     * Builds a new exception telling that the api key used for the HTTP
+     * requests is invalid.
      *
-     * @todo phpdoc
+     * @param string $apiKey 
      */
     public function __construct($apiKey)
     {

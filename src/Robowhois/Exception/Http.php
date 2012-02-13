@@ -22,15 +22,17 @@
 namespace Robowhois\Exception;
 
 use Robowhois\Exception;
-use \Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Response;
 
 class Http extends Exception
 {
   const MESSAGE = "Invalid HTTP response.\nStatus code is %d, here's the body: \n%s";
   
     /**
+     * Builds a generic HTTP exception with the status code and the body of an
+     * HTTP response.
      *
-     * @todo phpdoc
+     * @param Symfony\Component\HttpFoundation\Response $response 
      */
     public function __construct(Response $response)
     {

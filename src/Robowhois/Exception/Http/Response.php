@@ -29,8 +29,10 @@ class Response extends Exception
     const MESSAGE = "The client got a %d status code when retrieving the resource at %s";
     
     /**
+     * Builds a generic exception for a $response generated at the given $uri.
      *
-     * @todo phpdoc
+     * @param Symfony\Component\HttpFoundation\Response $response
+     * @param string $uri 
      */
     public function __construct(HttpResponse $response, $uri)
     {

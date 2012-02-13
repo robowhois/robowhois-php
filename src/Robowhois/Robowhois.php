@@ -68,8 +68,9 @@ class Robowhois
     }
     
     /**
+     * Returns the API key associated with this Robowhois instance.
      *
-     * @todo phpdoc
+     * @return string
      */
     protected function getApiKey()
     {
@@ -77,8 +78,9 @@ class Robowhois
     }
 
     /**
+     * Returns the client associated associated with thisRobowhois instance.
      *
-     * @todo phpdoc
+     * @return Robowhois\Contract\Http\Client 
      */
     protected function getClient()
     {
@@ -86,8 +88,16 @@ class Robowhois
     }
     
     /**
+     * Executes an HTTP request at the given $uri and returns an HTTP response.
      *
-     * @todo phpdoc
+     * @param   string $uri
+     * @return  Symfony\Component\HttpFoundation\Response
+     * @throws  Robowhois\Exception\Http
+     * @throws  Robowhois\Exception\Http\Request\Unauthorized
+     * @throws  Robowhois\Exception\Http\Response\NotFound
+     * @throws  Robowhois\Exception\Http\Response\BadGateway
+     * @throws  Robowhois\Exception\Http\Response\ServerError
+     * @throws  Robowhois\Exception\Http\Response
      */
     protected function retrieveResponse($uri)
     {
