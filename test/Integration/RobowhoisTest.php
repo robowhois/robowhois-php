@@ -23,6 +23,7 @@ namespace test\Integration;
 
 use test\TestCase;
 use Robowhois\Robowhois;
+use Stub\Http\Client as StubClient;
 
 class RobowhoisTest extends TestCase
 {
@@ -31,7 +32,7 @@ class RobowhoisTest extends TestCase
         $domain                 = "robowhois.com";
         $index                  = $this->getWebService()->whoisIndex($domain);
 
-        //      $this->assertEquals($index->getContent(),  StubClient::getContent($domain));
+        $this->assertEquals($this->stripSpecials($index->getContent()),  $this->stripSpecials(StubClient::getContent($domain)));
         $this->assertInstanceOf('Robowhois\Whois\Index', $index);
     }
     
@@ -43,6 +44,16 @@ class RobowhoisTest extends TestCase
         $domain                 = "robowhois.com";
         $robowhois              = new Robowhois("...");
         $index                  = $robowhois->whoisIndex($domain);
+        $this->assertEquals($this->stripSpecials($index->getContent()), $this->stripSpecials(StubClient::getContent($domain)));
+        $this->assertInstanceOf('Robowhois\Whois\Index', $index);
+    }
+
+    private function stripSpecials($content)
+    {
+        $pattern     = array(" ", "\r\n", "\n", "\r");
+        $datePattern = '/>>>(.*)<<</';
+
+    	return preg_replace($datePattern, '',str_replace($pattern, '', $content ));
     }
 }
 
