@@ -21,6 +21,14 @@ namespace Robowhois;
 
 use Robowhois\Contract\Http\Client;
 use Robowhois\Whois\Index;
+use Robowhois\Http\Client as HttpClient;
+use Buzz\Browser;
+use Robowhois\Exception\Http as HttpException;
+use Robowhois\Exception\Http\Request\Unauthorized as UnauthorizedRequest;
+use Robowhois\Exception\Http\Response\NotFound as ResourceNotFound;
+use Robowhois\Exception\Http\Response\BadGateway as BadGatewayException;
+use Robowhois\Exception\Http\Response\ServerError as InternalServerError;
+use Robowhois\Exception\Http\Response as ResponseException;
 
 class Robowhois
 {
@@ -37,10 +45,10 @@ class Robowhois
      * @param string                         $apiKey
      * @param Robowhois\Contract\Http\Client $client
      */
-    public function __construct($apiKey, Client $client)
+    public function __construct($apiKey, Client $client = null)
     {
         $this->apiKey = $apiKey;
-        $this->client = $client;
+        $this->client = $client ?: new HttpClient();
     }
     
     /**
@@ -54,19 +62,53 @@ class Robowhois
     {
         $this->getClient()->authenticate($this->getApiKey());
         $uri        = self::API_ENTRY_POINT . str_replace(":domain", $domain, self::API_INDEX_ENDPOINT);
-        $response   = $this->getClient()->get($uri);
+        $response   = $this->retrieveResponse($uri);
         
         return new Index($response->getContent());
     }
     
+    /**
+     *
+     * @todo phpdoc
+     */
     protected function getApiKey()
     {
         return $this->apiKey;
     }
-    
+
+    /**
+     *
+     * @todo phpdoc
+     */
     protected function getClient()
     {
         return $this->client;
+    }
+    
+    /**
+     *
+     * @todo phpdoc
+     */
+    protected function retrieveResponse($uri)
+    {
+        $response = $this->getClient()->get($uri);
+      
+        switch ($response->getStatusCode()) {
+            case 200:
+                return $response;
+            case 401:
+                throw new UnauthorizedRequest($this->getApiKey());
+            case 404:
+                throw new ResourceNotFound($response, $uri);
+            case 422:
+                throw new ResponseException($response, $uri);
+            case 502:
+                throw new BadGatewayException($response, $uri);
+            case 500:
+                throw new InternalServerError($response, $uri);
+            default:
+                throw new HttpException($response);
+        }
     }
 }
 

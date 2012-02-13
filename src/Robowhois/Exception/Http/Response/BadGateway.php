@@ -11,33 +11,19 @@
  */
 
 /**
- * Class RobowhoisTest
+ * Class BadGateway
  *
  * @package     Robowhois
- * @subpackage  Test
+ * @subpackage  Exception
  * @author      Alessandro Nadalin <alessandro.nadalin@gmail.com>
  * @author      David Funaro <ing.davidino@gmail.com>
  */
 
-namespace test;
+namespace Robowhois\Exception\Http\Response;
 
-use Robowhois\Robowhois;
-use Robowhois\Http\Client;
-use Stub\Http\Client as StubClient;
-use Buzz\Browser;
+use Robowhois\Exception\Http\Response as ResponseException;
 
-class TestCase extends \PHPUnit_Framework_TestCase
-{  
-    protected function getApiKey()
-    {
-        $apiKey =  file_get_contents(__DIR__ . "/.token");
-
-        return $apiKey;
-    }
-    
-    protected function getWebService()
-    {
-        return new Robowhois($this->getApiKey());
-    }
+class BadGateway extends ResponseException
+{
 }
 

@@ -11,33 +11,29 @@
  */
 
 /**
- * Class RobowhoisTest
+ * Class Http
  *
  * @package     Robowhois
- * @subpackage  Test
+ * @subpackage  Exception
  * @author      Alessandro Nadalin <alessandro.nadalin@gmail.com>
  * @author      David Funaro <ing.davidino@gmail.com>
  */
 
-namespace test;
+namespace Robowhois\Exception\Http\Request;
 
-use Robowhois\Robowhois;
-use Robowhois\Http\Client;
-use Stub\Http\Client as StubClient;
-use Buzz\Browser;
+use Robowhois\Exception\Http\Response as ResponseException;
 
-class TestCase extends \PHPUnit_Framework_TestCase
-{  
-    protected function getApiKey()
-    {
-        $apiKey =  file_get_contents(__DIR__ . "/.token");
-
-        return $apiKey;
-    }
+class Unauthorized extends ResponseException
+{
+    const MESSAGE = "The request made with the API key \"%s\" has been rejected: is the key valid?";
     
-    protected function getWebService()
+    /**
+     *
+     * @todo phpdoc
+     */
+    public function __construct($apiKey)
     {
-        return new Robowhois($this->getApiKey());
+      $this->message = sprintf(self::MESSAGE, $apiKey);
     }
 }
 

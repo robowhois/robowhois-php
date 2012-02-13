@@ -24,7 +24,7 @@ namespace test;
 use Robowhois\Http\Client;
 
 class StubResponse
-{
+{  
     public function getContent()
     {
         return "";
@@ -43,7 +43,7 @@ class StubResponse
 
 class StubBrowser extends \Buzz\Browser
 {
-    public function get($url, $headers = array())
+    public function get($url, $headers = array(), $code)
     {
         return new StubResponse();
     }
@@ -51,13 +51,16 @@ class StubBrowser extends \Buzz\Browser
 
 class ClientTest extends \PHPUnit_Framework_TestCase
 {
+    public function setup()
+    {
+      $this->client = new Client();
+    }
+  
     public function testTheClientReturnsAResponse()
     {
-        $client = new Client(new StubBrowser());
-                
         $this->assertInstanceOf(
                 "\Symfony\Component\HttpFoundation\Response",
-                $client->get('http://www.google.com')
+                $this->client->get('http://www.google.com')
         );
     }
 }

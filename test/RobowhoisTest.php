@@ -21,8 +21,9 @@
 
 use Robowhois\Robowhois;
 use Stub\Http\Client;
+use test\TestCase;
 
-class RobowhoisTest extends PHPUnit_Framework_TestCase
+class RobowhoisTest extends TestCase
 {   
     public function testARegisteredDomain()
     {
@@ -40,8 +41,63 @@ class RobowhoisTest extends PHPUnit_Framework_TestCase
         $fileContents = file_get_contents($filePath);
         $fileContents = Client::getContent($domain);
         
-        $this->assertEquals($content,$fileContents);
+        $this->assertEquals($content, $fileContents);
         $this->assertInstanceOf('Robowhois\Whois\Index', $index);
+    }
+    
+    /**
+     * @expectedException Robowhois\Exception\Http\Request\Unauthorized 
+     */
+    public function testAnExceptionIsRaisedWhenExecutingRequestsWithAnInvalidApiKey()
+    {
+        $robowhois  = new Robowhois("aaa", new Client);
+        $index      = $robowhois->whoisIndex('wrongapikey.com');      
+    }
+    
+    /**
+     * @expectedException Robowhois\Exception\Http\Response\NotFound
+     */
+    public function testAnExceptionIsRaisedWhenExecutingRequestsToNonExistingAPIEndpoints()
+    {
+        $robowhois  = new Robowhois("aaa", new Client);
+        $robowhois->whoisIndex('notfound.com'); 
+    }
+    
+    /**
+     * @expectedException Robowhois\Exception\Http\Response\BadGateway
+     */
+    public function testAnExceptionIsRaisedWhenABadgatewayErrorOccurs()
+    {
+        $robowhois  = new Robowhois("aaa", new Client);
+        $robowhois->whoisIndex('502.com'); 
+    }
+    
+    /**
+     * @expectedException Robowhois\Exception\Http\Response
+     */
+    public function testAGenericExceptionIsRaisedWhenA422ErrorOccurs()
+    {
+        $this->markTestSkipped("How to deal with non-standard-http 422 status code?");
+        $robowhois  = new Robowhois("aaa", new Client);
+        $robowhois->whoisIndex('422.com'); 
+    }
+    
+    /**
+     * @expectedException Robowhois\Exception\Http\Response\ServerError
+     */
+    public function testAnExceptionIsRaisedWhenAnIntervalServerErrorOccurs()
+    {
+        $robowhois  = new Robowhois("aaa", new Client);
+        $robowhois->whoisIndex('500.com'); 
+    }
+    
+    /**
+     * @expectedException Robowhois\Exception\Http
+     */
+    public function testAnUnknownErrorRaisesAGenericException()
+    {
+        $robowhois  = new Robowhois("aaa", new Client);
+        $robowhois->whoisIndex('400.com'); 
     }
 }
 

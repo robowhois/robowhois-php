@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Orient package.
+ * This file is part of the Robowhois package.
  *
  * (c) Alessandro Nadalin <alessandro.nadalin@gmail.com>
  * (c) David Funaro <ing.davidino@gmail.com>
@@ -36,9 +36,9 @@ class Client implements HttpClient
     * @param string  $apiKey   The api key of Robowhois
     * @param Browser $adapter  The HTTP adapter used to make HTTP requests
     */
-    public function __construct(Browser $adapter)
+    public function __construct(Browser $adapter = null)
     {
-        $this->adapter  = $adapter;
+        $this->adapter  = $adapter ?: new Browser;
         $this->configureAdapter();
     }
     
@@ -61,12 +61,12 @@ class Client implements HttpClient
     */
     public function get($uri)
     {
-        $response = $this->getAdapter()->get($uri);
+        $browserResponse = $this->getAdapter()->get($uri);
 
         return new Response(
-            $response->getContent(), 
-            $response->getStatusCode(), 
-            $response->getHeaders()
+            $browserResponse->getContent(), 
+            $browserResponse->getStatusCode(), 
+            $browserResponse->getHeaders()
         );
     }
   

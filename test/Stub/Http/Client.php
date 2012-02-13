@@ -56,7 +56,7 @@ class Client implements ClientInterface
         
         return $content;
     }
-
+    
     private function getHeaders($uri)
     {
         $headers = array();

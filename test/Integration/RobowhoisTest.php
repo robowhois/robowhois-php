@@ -22,6 +22,7 @@
 namespace test\Integration;
 
 use test\TestCase;
+use Robowhois\Robowhois;
 
 class RobowhoisTest extends TestCase
 {
@@ -30,8 +31,18 @@ class RobowhoisTest extends TestCase
         $domain                 = "robowhois.com";
         $index                  = $this->getWebService()->whoisIndex($domain);
 
-        //$this->assertEquals($index->getContent(),  StubClient::getContent($domain));
+        //      $this->assertEquals($index->getContent(),  StubClient::getContent($domain));
         $this->assertInstanceOf('Robowhois\Whois\Index', $index);
+    }
+    
+    /**
+     * @expectedException Robowhois\Exception\Http\Request\Unauthorized 
+     */
+    public function testExecutingUnauthenticatedRequests()
+    {        
+        $domain                 = "robowhois.com";
+        $robowhois              = new Robowhois("...");
+        $index                  = $robowhois->whoisIndex($domain);
     }
 }
 
