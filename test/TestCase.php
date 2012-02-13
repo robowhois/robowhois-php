@@ -37,7 +37,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
     
     protected function getWebService()
     {
-        return new Robowhois('a', new Client(new Browser()));
+        return new Robowhois($this->getApiKey(), new Client(new Browser()));
     }
 }
 
