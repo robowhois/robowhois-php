@@ -7,11 +7,8 @@ require 'vendor/.composer/autoload.php';
 
 $robowhois = new Robowhois('INSERT-YOUR-API-KEY-HERE');
 
-try
-{
+try {
     echo $robowhois->whoisIndex('robowhois.com')->getContent();
-}
-catch (Exception $e)
-{
+} catch (Exception $e) {
     echo "The following error occurred: " . $e->getMessage();
 }
