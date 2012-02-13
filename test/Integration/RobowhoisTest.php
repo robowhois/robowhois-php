@@ -28,7 +28,7 @@ class RobowhoisTest extends TestCase
     public function testIndexOfRobowhoisdotcom()
     {        
         $domain                 = "robowhois.com";
-        $index                  = $this->getWebService()->get('robowhois')->whoisIndex($domain);
+        $index                  = $this->getWebService()->whoisIndex($domain);
 
         //$this->assertEquals($index->getContent(),  StubClient::getContent($domain));
         $this->assertInstanceOf('Robowhois\Whois\Index', $index);

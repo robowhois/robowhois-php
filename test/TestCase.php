@@ -25,11 +25,9 @@ use Robowhois\Robowhois;
 use Robowhois\Http\Client;
 use Stub\Http\Client as StubClient;
 use Buzz\Browser;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Reference;
 
 class TestCase extends \PHPUnit_Framework_TestCase
-{
+{  
     protected function getApiKey()
     {
         $apiKey =  file_get_contents(__DIR__ . "/.token");
@@ -39,15 +37,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
     
     protected function getWebService()
     {
-        $container = new ContainerBuilder();
-        $container
-            ->register('robowhois', '%robowhois.class%')
-            ->addArgument($this->getApiKey())
-            ->addArgument(new Client(new Browser))
-        ;
-        $container->setParameter('robowhois.class', 'Robowhois\Robowhois');
-        
-        return $container;
+        return new Robowhois('a', new Client(new Browser()));
     }
 }
 
