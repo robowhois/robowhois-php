@@ -21,6 +21,13 @@
 
 namespace test;
 
+use Robowhois\Robowhois;
+use Robowhois\Http\Client;
+use Stub\Http\Client as StubClient;
+use Buzz\Browser;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Reference;
+
 class TestCase extends \PHPUnit_Framework_TestCase
 {
     protected function getApiKey()
@@ -28,6 +35,19 @@ class TestCase extends \PHPUnit_Framework_TestCase
         $apiKey =  file_get_contents(__DIR__ . "/.token");
 
         return $apiKey;
+    }
+    
+    protected function getWebService()
+    {
+        $container = new ContainerBuilder();
+        $container
+            ->register('robowhois', '%robowhois.class%')
+            ->addArgument($this->getApiKey())
+            ->addArgument(new Client(new Browser))
+        ;
+        $container->setParameter('robowhois.class', 'Robowhois\Robowhois');
+        
+        return $container;
     }
 }
 

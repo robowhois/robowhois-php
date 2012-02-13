@@ -22,20 +22,15 @@
 namespace test\Integration;
 
 use test\TestCase;
-use Robowhois\Robowhois;
-use Robowhois\Http\Client;
-use Stub\Http\Client as StubClient;
-use Buzz\Browser;
 
 class RobowhoisTest extends TestCase
 {
     public function testIndexOfRobowhoisdotcom()
-    {
+    {        
         $domain                 = "robowhois.com";
-        $robowhois              = new Robowhois($this->getApiKey(), new Client(new Browser));
-        $index                  = $robowhois->whoisIndex($domain);
+        $index                  = $this->getWebService()->get('robowhois')->whoisIndex($domain);
 
-        $this->assertEquals($index->getContent(),  StubClient::getContent($domain));
+        //$this->assertEquals($index->getContent(),  StubClient::getContent($domain));
         $this->assertInstanceOf('Robowhois\Whois\Index', $index);
     }
 }

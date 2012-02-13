@@ -18,14 +18,13 @@
     ],
     "autoload": {
         "psr-0": {
-            "Robowhois": "src/",
-            "Stub" : "test/",
-            "test" : ""
+            "Robowhois": "src/"
         }
     },
     "require": {
         "php": ">=5.3.2",
         "kriswallsmith/Buzz": ">=0.5",
-        "symfony/http-foundation": ">=2.0.9"
+        "symfony/http-foundation": "2.0.10",
+        "symfony/dependency-injection": "2.0.10"
     }
 }
