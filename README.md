@@ -48,6 +48,12 @@ repository, or run it
 
     php sample/index.php
 
+## PHPDoc
+
+You can generate PHP documentation with doxygen:
+
+    doxygen docs/.dox
+
 ## Test
 
 The client is tested with phpunit; you can run the tests, from the repository's
