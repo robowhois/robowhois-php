@@ -69,6 +69,6 @@ directory containing your Robowhois API key and run
 
 ## Thanks to
 
-* [Simone Carletti](http://simone.carletti.name)
+* [Simone Carletti](http://www.simonecarletti.com/)
 * [Alessandro Nadalin](http://www.odino.org)
 * [David Funaro](http://davidfunaro.com)
