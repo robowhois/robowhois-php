@@ -90,6 +90,15 @@ class RobowhoisTest extends TestCase
         $robowhois  = new Robowhois("aaa", new Client);
         $robowhois->whoisIndex('500.com'); 
     }
+
+    /**
+     * @expectedException Robowhois\Exception\Http\Response\VoidResponse
+     */
+    public function testAnExceptionIsRaisedWhenVoidResponse()
+    {
+        $robowhois  = new Robowhois("aaa", new Client);
+        $robowhois->whoisIndex('void.com'); 
+    }
     
     /**
      * @expectedException Robowhois\Exception\Http\Request\Bad
@@ -106,7 +115,19 @@ class RobowhoisTest extends TestCase
     public function testAnUnknownErrorRaisesAGenericException()
     {
         $robowhois  = new Robowhois("aaa", new Client);
-        $robowhois->whoisIndex('409.com'); 
+        $robowhois->whoisIndex('409.com');
+    }
+
+    public function testGetAccountInformation()
+    {
+        $robowhois  = new Robowhois("aaa", new Client);
+        $account    = $robowhois->whoisAccount();
+
+        $this->assertInstanceOf('Robowhois\Whois\Account', $account);
+        $this->assertEquals('4ef12dbfca71cce5fd000001', $account->getId());
+        $this->assertEquals('email@example.com', $account->getEmail());
+        $this->assertEquals('0123456789', $account->getApiToken());
+        $this->assertEquals(480, $account->getCreditsRemaining());
     }
     
     /**

@@ -6,3 +6,4 @@ test/.token
 nbproject
 docs/html
 docs/latex
+.DS_Store

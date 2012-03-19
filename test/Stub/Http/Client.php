@@ -35,8 +35,7 @@ class Client implements ClientInterface
      */
     public function get($uri)
     {
-        
-        $path    = __DIR__ . '/../../bin/'.str_replace("http://api.robowhois.com/whois/", null, $uri);
+        $path = self::getPath($uri);
 
         $headers    = $this->getHeaders($uri);
         $statusCode = file_get_contents($path. '/' . 'statusCode');
@@ -51,7 +50,7 @@ class Client implements ClientInterface
      */
     public static function getContent($uri)
     {
-        $path    = __DIR__ . '/../../bin/'.str_replace("http://api.robowhois.com/whois/", null, $uri);
+        $path       = self::getPath($uri);
         $content    = file_get_contents($path. '/' . 'content');
         
         return $content;
@@ -61,7 +60,7 @@ class Client implements ClientInterface
     {
         $headers = array();
         
-        $path    = __DIR__ . '/../../bin/'.str_replace("http://api.robowhois.com/whois/", null, $uri);
+        $path = self::getPath($uri);
 
         $headersFile = $path. '/' . 'headers';
         if (file_exists($headersFile)){
@@ -81,6 +80,13 @@ class Client implements ClientInterface
         return $headers;   
     }
   
-  
+    private static function getPath($uri)
+    {
+        if(strpos($uri, 'account'))
+            return __DIR__ . '/../../bin/' . 'account';
+        
+        return __DIR__ . '/../../bin/'.str_replace("http://api.robowhois.com/whois/", null, $uri);
+                
+    }  
 }
 

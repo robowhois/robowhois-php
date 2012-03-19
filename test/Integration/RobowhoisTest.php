@@ -36,6 +36,12 @@ class RobowhoisTest extends TestCase
         $this->assertInstanceOf('Robowhois\Whois\Index', $index);
     }
 
+    public function testAccountInformation()
+    {
+        $account = $this->getWebService()->whoisAccount();  
+        $this->assertInstanceOf('Robowhois\Whois\Account', $account);
+    }
+
     /**
      * @expectedException Robowhois\Exception\Http\request\Bad 
      */

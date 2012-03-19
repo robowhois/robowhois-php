@@ -21,6 +21,7 @@ namespace Robowhois;
 
 use Robowhois\Contract\Http\Client;
 use Robowhois\Whois\Index;
+use Robowhois\Whois\Account;
 use Robowhois\Whois\Record;
 use Robowhois\Http\Client as HttpClient;
 use Buzz\Browser;
@@ -32,16 +33,19 @@ use Robowhois\Exception\Http\Response\NotFound as ResourceNotFound;
 use Robowhois\Exception\Http\Response\BadGateway as BadGatewayException;
 use Robowhois\Exception\Http\Response\ServerError as InternalServerError;
 use Robowhois\Exception\Http\Response as ResponseException;
+use Robowhois\Exception\Http\Response\VoidResponse;
 
 class Robowhois
 {
     private $apiKey;
     private $client;
+
+    const API_ENTRY_POINT            = "http://api.robowhois.com";
+    const API_INDEX_ENDPOINT         = "/whois/:domain";
+    const API_AVAILABILITY_ENDPOINT  = "/whois/:domain/availability";
+    const API_ACCOUNT_ENDPOINT       = "/account";
+    const API_RECORD_ENDPOINT        = "/whois/:domain/record";
     
-    const API_ENTRY_POINT               = "http://api.robowhois.com";
-    const API_INDEX_ENDPOINT            = "/whois/:domain";
-    const API_RECORD_ENDPOINT           = "/whois/:domain/record";
-    const API_AVAILABILITY_ENDPOINT     = "/whois/:domain/availability";
     
     /**
      * Instantiates a new Robowhois object with the given $apiKey
@@ -56,6 +60,29 @@ class Robowhois
         $this->client = $client ?: new HttpClient();
     }
     
+    /**
+     * Retrieves the information about account
+     * 
+     * @return Robowhois\Whois\Account
+     */
+    public function whoisAccount()
+    {
+        $response   = $this->callApi(null, 'ACCOUNT');
+
+        $values = json_decode($response->getContent(), true);
+        $value  = array_key_exists('account', $values) ? $values['account'] : null;
+
+        if (!count($value))  
+            throw new Exception();
+
+        $id                = array_key_exists('id', $value)                ? $value['id']                : null;
+        $email             = array_key_exists('email', $value)             ? $value['email']             : null;
+        $api_token         = array_key_exists('api_token', $value)         ? $value['api_token']         : null;
+        $credits_remaining = array_key_exists('credits_remaining', $value) ? $value['credits_remaining'] : null;
+        
+        return new Account($id, $email, $api_token, $credits_remaining);
+    }
+
     /**
      * Convenient method to check if the given $domain is available.
      * 
@@ -180,6 +207,7 @@ class Robowhois
      *
      * @param   string $uri
      * @return  Symfony\Component\HttpFoundation\Response
+     * @throws  Robowhois\Exception\Http\Response\VoidResponse
      * @throws  Robowhois\Exception\Http
      * @throws  Robowhois\Exception\Http\Request\Unauthorized
      * @throws  Robowhois\Exception\Http\Request\Bad
@@ -194,7 +222,10 @@ class Robowhois
       
         switch ($response->getStatusCode()) {
             case 200:
-                return $response;
+                if ($response->getContent())
+                    return $response;
+                
+                throw new VoidResponse($response,$uri);
             case 400:
                 throw new BadRequest($response, $uri);
             case 401:
