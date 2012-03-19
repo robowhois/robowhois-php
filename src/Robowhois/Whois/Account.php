@@ -29,20 +29,17 @@ class Account
 
     
     /**
-     * @param string $content
+     * @param string  $id
+     * @param string  $email
+     * @param string  $api_tokem
+     * @param integer $credits_remaining
      */
-    public function __construct($content)
+    public function __construct($id, $email, $api_token, $credits_remaining)
     {
-        $values = json_decode($content, true);
-        $value = array_key_exists('account', $values) ? $values['account'] : null;
-
-        if (!count($value))  
-            throw new Exception();
-
-        $this->id                = array_key_exists('id', $value)                ? $value['id']        : null;
-        $this->email             = array_key_exists('email', $value)             ? $value['email']     : null;
-        $this->api_token         = array_key_exists('api_token', $value)         ? $value['api_token'] : null;
-        $this->credits_remaining = array_key_exists('credits_remaining', $value) ? $value['credits_remaining'] : null;
+        $this->id                = $id;
+        $this->email             = $email;
+        $this->api_token         = $api_token;
+        $this->credits_remaining = $credits_remaining;
     }
     
     /**

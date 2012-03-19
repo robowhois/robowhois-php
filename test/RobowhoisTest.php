@@ -119,5 +119,32 @@ class RobowhoisTest extends TestCase
         $this->assertEquals('0123456789', $account->getApiToken());
         $this->assertEquals(480, $account->getCreditsRemaining());
     }
+    
+    /**
+     * @expectedException Robowhois\Exception
+     */
+    public function testDomainAvailabilityWithAMalformedResponse()
+    {
+        $robowhois  = new Robowhois("aaa", new Client);
+        $availability = $robowhois->whoisAvailability('availablebutmalformed.com'); 
+    }
+    
+    public function testADomainIsAvailable()
+    {
+        $robowhois  = new Robowhois("aaa", new Client);
+        $availability = $robowhois->whoisAvailability('available.com'); 
+        
+        $this->assertTrue($availability['available']);
+        $this->assertFalse($availability['registered']);
+        $this->assertEquals('2012-01-01', $availability['daystamp']);
+    }
+    
+    public function testAvailabilityConvenientMethods()
+    {
+        $robowhois  = new Robowhois("aaa", new Client);
+        
+        $this->assertTrue($robowhois->isAvailable('available.com'));
+        $this->assertFalse($robowhois->isRegistered('available.com'));
+    }
 }
 

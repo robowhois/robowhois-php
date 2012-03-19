@@ -24,6 +24,7 @@ use Robowhois\Whois\Index;
 use Robowhois\Whois\Account;
 use Robowhois\Http\Client as HttpClient;
 use Buzz\Browser;
+use Robowhois\Exception;
 use Robowhois\Exception\Http as HttpException;
 use Robowhois\Exception\Http\Request\Unauthorized as UnauthorizedRequest;
 use Robowhois\Exception\Http\Request\Bad as BadRequest;
@@ -37,11 +38,12 @@ class Robowhois
 {
     private $apiKey;
     private $client;
-    
-    const API_ENTRY_POINT       = "http://api.robowhois.com";
-    const API_INDEX_ENDPOINT    = "/whois/:domain";
-    const API_ACCOUNT_ENDPOINT  = "/account";
-    
+
+    const API_ENTRY_POINT            = "http://api.robowhois.com";
+    const API_INDEX_ENDPOINT         = "/whois/:domain";
+    const API_AVAILABILITY_ENDPOINT  = "/whois/:domain/availability";
+    const API_ACCOUNT_ENDPOINT       = "/account";
+
     /**
      * Instantiates a new Robowhois object with the given $apiKey
      * and an internal http $client.
@@ -62,13 +64,66 @@ class Robowhois
      */
     public function whoisAccount()
     {
-        $this->getClient()->authenticate($this->getApiKey());
-        $uri        = self::API_ENTRY_POINT . self::API_ACCOUNT_ENDPOINT;
-        $response   = $this->retrieveResponse($uri);
+        $response   = $this->callApi(null, 'ACCOUNT');
+
+        $values = json_decode($response->getContent(), true);
+        $value  = array_key_exists('account', $values) ? $values['account'] : null;
+
+        if (!count($value))  
+            throw new Exception();
+
+        $id                = array_key_exists('id', $value)                ? $value['id']                : null;
+        $email             = array_key_exists('email', $value)             ? $value['email']             : null;
+        $api_token         = array_key_exists('api_token', $value)         ? $value['api_token']         : null;
+        $credits_remaining = array_key_exists('credits_remaining', $value) ? $value['credits_remaining'] : null;
         
-        return new Account($response->getContent());
+        return new Account($id, $email, $api_token, $credits_remaining);
     }
 
+    /**
+     * Convenient method to check if the given $domain is available.
+     * 
+     * @param   string $domain
+     * @return  boolean
+     */
+    public function isAvailable($domain)
+    {
+        $availability = $this->whoisAvailability($domain);
+      
+        return $availability['available'];
+    }
+
+    /**
+     * Convenient method to check if the given $domain is registered.
+     * 
+     * @param   string $domain
+     * @return  boolean
+     */
+    public function isRegistered($domain)
+    {      
+        return !$this->isAvailable($domain);
+    }
+    
+    /**
+     * Retrieves an array containing availability information for the given
+     * $domain.
+     * 
+     * @param string $domain
+     * 
+     * @return Array
+     */
+    public function whoisAvailability($domain)
+    {      
+        $response     = $this->callApi($domain, 'AVAILABILITY');
+        $resultArray  = json_decode($response->getContent(), true);
+        
+        if (!is_array($resultArray) || !isset($resultArray['response'])) {
+          throw new Exception();
+        }
+        
+        return $resultArray['response'];
+    }
+    
     /**
      * Retrieves the raw information about a whois record.
      * 
@@ -77,12 +132,26 @@ class Robowhois
      * @return Robowhois\Whois\Index
      */
     public function whoisIndex($domain)
+    {        
+        return new Index($this->callApi($domain, 'INDEX')->getContent());
+    }
+    
+    /**
+     * Calls the given $api for the given $domain (eg 'INDEX' => 'google.com').
+     *
+     * @param   string $domain
+     * @param   string $api
+     * @return  Symfony\Component\HttpFoundation\Response
+     */
+    protected function callApi($domain, $api)
     {
         $this->getClient()->authenticate($this->getApiKey());
-        $uri        = self::API_ENTRY_POINT . str_replace(":domain", $domain, self::API_INDEX_ENDPOINT);
-        $response   = $this->retrieveResponse($uri);
-        
-        return new Index($response->getContent());
+        $constant = sprintf('API_%s_ENDPOINT', $api);
+        $refClass = new \ReflectionClass(__CLASS__);
+        $endpoint = $refClass->getConstant($constant);
+        $uri      = self::API_ENTRY_POINT . str_replace(":domain", $domain, $endpoint);
+        var_dump($uri);
+        return $this->retrieveResponse($uri);
     }
     
     /**
@@ -113,6 +182,7 @@ class Robowhois
      * @throws  Robowhois\Exception\Http\Response\VoidResponse
      * @throws  Robowhois\Exception\Http
      * @throws  Robowhois\Exception\Http\Request\Unauthorized
+     * @throws  Robowhois\Exception\Http\Request\Bad
      * @throws  Robowhois\Exception\Http\Response\NotFound
      * @throws  Robowhois\Exception\Http\Response\BadGateway
      * @throws  Robowhois\Exception\Http\Response\ServerError

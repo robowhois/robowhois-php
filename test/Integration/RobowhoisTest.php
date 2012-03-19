@@ -41,6 +41,17 @@ class RobowhoisTest extends TestCase
         $account = $this->getWebService()->whoisAccount();  
         $this->assertInstanceOf('Robowhois\Whois\Account', $account);
     }
+
+    /**
+     * @expectedException Robowhois\Exception\Http\request\Bad 
+     */
+    public function testIndexOfANonExistingDomain()
+    {        
+        $domain                 = "robowhois.com" . 123467;
+        $index                  = $this->getWebService()->whoisIndex($domain);
+
+        $this->assertInstanceOf('Robowhois\Whois\Index', $index);
+    }
     
     /**
      * @expectedException Robowhois\Exception\Http\Request\Unauthorized 
@@ -52,6 +63,20 @@ class RobowhoisTest extends TestCase
         $index                  = $robowhois->whoisIndex($domain);
         $this->assertEquals($this->stripSpecials($index->getContent()), $this->stripSpecials(StubClient::getContent($domain)));
         $this->assertInstanceOf('Robowhois\Whois\Index', $index);
+    }
+    
+    public function testDomainAvailability()
+    {
+        $availability = $this->getWebService()->whoisAvailability('robowhois.com'); 
+        
+        $this->assertFalse($availability['available']);
+        $this->assertTrue($availability['registered']);
+    }
+    
+    public function testDomainAvailabilityConvenientMethods()
+    {        
+        $this->assertFalse($this->getWebService()->isAvailable('robowhois.com'));
+        $this->assertTrue($this->getWebService()->isRegistered('robowhois.com'));
     }
 
     protected function stripSpecials($content)
