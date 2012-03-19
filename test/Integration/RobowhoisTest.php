@@ -48,7 +48,7 @@ class RobowhoisTest extends TestCase
         $this->assertInstanceOf('Robowhois\Whois\Index', $index);
     }
 
-    private function stripSpecials($content)
+    protected function stripSpecials($content)
     {
         $pattern     = array(" ", "\r\n", "\n", "\r");
         $datePattern = '/>>>(.*)<<</';

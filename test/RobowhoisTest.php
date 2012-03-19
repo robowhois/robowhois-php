@@ -73,16 +73,6 @@ class RobowhoisTest extends TestCase
     }
     
     /**
-     * @expectedException Robowhois\Exception\Http\Response
-     */
-    public function testAGenericExceptionIsRaisedWhenA422ErrorOccurs()
-    {
-        $this->markTestSkipped("How to deal with non-standard-http 422 status code?");
-        $robowhois  = new Robowhois("aaa", new Client);
-        $robowhois->whoisIndex('422.com'); 
-    }
-    
-    /**
      * @expectedException Robowhois\Exception\Http\Response\ServerError
      */
     public function testAnExceptionIsRaisedWhenAnIntervalServerErrorOccurs()
@@ -92,12 +82,21 @@ class RobowhoisTest extends TestCase
     }
     
     /**
+     * @expectedException Robowhois\Exception\Http\Request\Bad
+     */
+    public function testAGenericErrorRaisesABadRequestException()
+    {
+        $robowhois  = new Robowhois("aaa", new Client);
+        $robowhois->whoisIndex('400.com'); 
+    }
+    
+    /**
      * @expectedException Robowhois\Exception\Http
      */
     public function testAnUnknownErrorRaisesAGenericException()
     {
         $robowhois  = new Robowhois("aaa", new Client);
-        $robowhois->whoisIndex('400.com'); 
+        $robowhois->whoisIndex('409.com'); 
     }
 }
 

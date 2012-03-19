@@ -25,6 +25,7 @@ use Robowhois\Http\Client as HttpClient;
 use Buzz\Browser;
 use Robowhois\Exception\Http as HttpException;
 use Robowhois\Exception\Http\Request\Unauthorized as UnauthorizedRequest;
+use Robowhois\Exception\Http\Request\Bad as BadRequest;
 use Robowhois\Exception\Http\Response\NotFound as ResourceNotFound;
 use Robowhois\Exception\Http\Response\BadGateway as BadGatewayException;
 use Robowhois\Exception\Http\Response\ServerError as InternalServerError;
@@ -106,6 +107,8 @@ class Robowhois
         switch ($response->getStatusCode()) {
             case 200:
                 return $response;
+            case 400:
+                throw new BadRequest($response, $uri);
             case 401:
                 throw new UnauthorizedRequest($this->getApiKey());
             case 404:

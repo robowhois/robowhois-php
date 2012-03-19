@@ -11,7 +11,7 @@
  */
 
 /**
- * Class Unauthorized
+ * Class Bad
  *
  * @package     Robowhois
  * @subpackage  Exception
@@ -23,19 +23,8 @@ namespace Robowhois\Exception\Http\Request;
 
 use Robowhois\Exception\Http\Response as ResponseException;
 
-class Unauthorized extends ResponseException
+class Bad extends ResponseException
 {
-    const MESSAGE = "The request made with the API key \"%s\" has been rejected: is the key valid?";
-    
-    /**
-     * Builds a new exception telling that the api key used for the HTTP
-     * requests is invalid.
-     *
-     * @param string $apiKey 
-     */
-    public function __construct($apiKey)
-    {
-      $this->message = sprintf(self::MESSAGE, $apiKey);
-    }
+    const MESSAGE = "The client got a %d status code when retrieving the resource at %s: this may be caused by a temporary failure of the WHOIS origin service";
 }
 
