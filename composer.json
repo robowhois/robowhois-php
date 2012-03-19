@@ -23,7 +23,7 @@
     },
     "require": {
         "php": ">=5.3.2",
-        "kriswallsmith/Buzz": ">=0.5",
-        "symfony/http-foundation": "2.0.10"
+        "kriswallsmith/Buzz": "v0.5",
+        "symfony/http-foundation": "v2.0.12"
     }
 }

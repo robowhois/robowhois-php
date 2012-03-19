@@ -1,5 +1,4 @@
 /vendor/.composer/
-composer.lock
 spike.php
 composer.phar
 vendor/

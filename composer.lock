@@ -1,0 +1,14 @@
+{
+    "hash": "384213a3c0cc3e58ce71b235862aaeff",
+    "packages": [
+        {
+            "package": "kriswallsmith/buzz",
+            "version": "v0.5"
+        },
+        {
+            "package": "symfony/http-foundation",
+            "version": "v2.0.12"
+        }
+    ],
+    "aliases": []
+}
