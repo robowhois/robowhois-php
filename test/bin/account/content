@@ -1,0 +1,8 @@
+{
+  "account": {
+    "id": "4ef12dbfca71cce5fd000001",
+    "email": "email@example.com",
+    "api_token": "0123456789",
+    "credits_remaining": 480
+  }
+}

@@ -21,6 +21,7 @@ namespace Robowhois;
 
 use Robowhois\Contract\Http\Client;
 use Robowhois\Whois\Index;
+use Robowhois\Whois\Account;
 use Robowhois\Http\Client as HttpClient;
 use Buzz\Browser;
 use Robowhois\Exception\Http as HttpException;
@@ -30,6 +31,7 @@ use Robowhois\Exception\Http\Response\NotFound as ResourceNotFound;
 use Robowhois\Exception\Http\Response\BadGateway as BadGatewayException;
 use Robowhois\Exception\Http\Response\ServerError as InternalServerError;
 use Robowhois\Exception\Http\Response as ResponseException;
+use Robowhois\Exception\Http\Response\VoidResponse;
 
 class Robowhois
 {
@@ -38,6 +40,7 @@ class Robowhois
     
     const API_ENTRY_POINT       = "http://api.robowhois.com";
     const API_INDEX_ENDPOINT    = "/whois/:domain";
+    const API_ACCOUNT_ENDPOINT  = "/account";
     
     /**
      * Instantiates a new Robowhois object with the given $apiKey
@@ -52,6 +55,20 @@ class Robowhois
         $this->client = $client ?: new HttpClient();
     }
     
+    /**
+     * Retrieves the information about account
+     * 
+     * @return Robowhois\Whois\Account
+     */
+    public function whoisAccount()
+    {
+        $this->getClient()->authenticate($this->getApiKey());
+        $uri        = self::API_ENTRY_POINT . self::API_ACCOUNT_ENDPOINT;
+        $response   = $this->retrieveResponse($uri);
+        
+        return new Account($response->getContent());
+    }
+
     /**
      * Retrieves the raw information about a whois record.
      * 
@@ -93,6 +110,7 @@ class Robowhois
      *
      * @param   string $uri
      * @return  Symfony\Component\HttpFoundation\Response
+     * @throws  Robowhois\Exception\Http\Response\VoidResponse
      * @throws  Robowhois\Exception\Http
      * @throws  Robowhois\Exception\Http\Request\Unauthorized
      * @throws  Robowhois\Exception\Http\Response\NotFound
@@ -106,7 +124,10 @@ class Robowhois
       
         switch ($response->getStatusCode()) {
             case 200:
-                return $response;
+                if ($response->getContent())
+                    return $response;
+                
+                throw new VoidResponse($response,$uri);
             case 400:
                 throw new BadRequest($response, $uri);
             case 401:

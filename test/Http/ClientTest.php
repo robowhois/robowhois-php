@@ -43,7 +43,7 @@ class StubResponse
 
 class StubBrowser extends \Buzz\Browser
 {
-    public function get($url, $headers = array(), $code)
+    public function get($url, $headers = array())
     {
         return new StubResponse();
     }
