@@ -35,6 +35,17 @@ class RobowhoisTest extends TestCase
         $this->assertEquals($this->stripSpecials($index->getContent()),  $this->stripSpecials(StubClient::getContent($domain)));
         $this->assertInstanceOf('Robowhois\Whois\Index', $index);
     }
+
+    /**
+     * @expectedException Robowhois\Exception\Http\request\Bad 
+     */
+    public function testIndexOfANonExistingDomain()
+    {        
+        $domain                 = "robowhois.com" . 123467;
+        $index                  = $this->getWebService()->whoisIndex($domain);
+
+        $this->assertInstanceOf('Robowhois\Whois\Index', $index);
+    }
     
     /**
      * @expectedException Robowhois\Exception\Http\Request\Unauthorized 
