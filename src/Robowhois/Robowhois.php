@@ -120,6 +120,7 @@ class Robowhois
      * @param string $domain
      * 
      * @return Robowhois\Whois\Index
+     * @todo mmm nested IFs
      */
     public function whoisrecord($domain)
     {        
