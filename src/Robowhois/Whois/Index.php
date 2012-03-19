@@ -24,6 +24,8 @@ class Index
     protected $content;
     
     /**
+     * Creates a new raw WHOIS record.
+     * 
      * @param string $content
      */
     public function __construct($content)
@@ -31,14 +33,16 @@ class Index
         $this->content = $content;
     }
     
-    /**
-     * @return string
-     */
     public function __toString()
     {
         return $this->getContent();
     }
     
+    /**
+     * Returns the raw WHOIS informations for this object.
+     *
+     * @return string
+     */
     public function getContent()
     {
         return $this->content;

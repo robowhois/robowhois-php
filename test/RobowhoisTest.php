@@ -25,11 +25,10 @@ use test\TestCase;
 
 class RobowhoisTest extends TestCase
 {   
-    public function testARegisteredDomain()
+    public function testWhoisIndex()
     {
         $domain     = 'www.index.com';
         $filePath   = __DIR__.'/bin/'. $domain;
-        
         $robowhois  = new Robowhois("aaa", new Client);
         $index      = $robowhois->whoisIndex($domain);
         
@@ -38,11 +37,22 @@ class RobowhoisTest extends TestCase
         $content = ob_get_contents();
         ob_end_clean();
         
-        $fileContents = file_get_contents($filePath);
         $fileContents = Client::getContent($domain);
         
         $this->assertEquals($content, $fileContents);
         $this->assertInstanceOf('Robowhois\Whois\Index', $index);
+    }
+    
+    public function testWhoisRecord()
+    {
+        $domain     = 'www.index.com';
+        $filePath   = __DIR__.'/bin/'. $domain;
+        $robowhois  = new Robowhois("aaa", new Client);
+        $whois     = $robowhois->whoisRecord($domain);
+        
+        $this->assertEquals('2012-01-01', $whois->getDaystamp());
+        $this->assertEquals('MyRecord', $whois->getRecord());
+        $this->assertInstanceOf('Robowhois\Whois\Record', $whois);
     }
     
     /**
