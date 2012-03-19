@@ -21,6 +21,7 @@ namespace Robowhois;
 
 use Robowhois\Contract\Http\Client;
 use Robowhois\Whois\Index;
+use Robowhois\Whois\Record;
 use Robowhois\Http\Client as HttpClient;
 use Buzz\Browser;
 use Robowhois\Exception;
@@ -39,6 +40,7 @@ class Robowhois
     
     const API_ENTRY_POINT               = "http://api.robowhois.com";
     const API_INDEX_ENDPOINT            = "/whois/:domain";
+    const API_RECORD_ENDPOINT           = "/whois/:domain/record";
     const API_AVAILABILITY_ENDPOINT     = "/whois/:domain/availability";
     
     /**
@@ -85,6 +87,7 @@ class Robowhois
      * @param string $domain
      * 
      * @return Array
+     * @todo meaningful exception message
      */
     public function whoisAvailability($domain)
     {      
@@ -104,10 +107,33 @@ class Robowhois
      * @param string $domain
      * 
      * @return Robowhois\Whois\Index
+     * @todo meaningful exception message
      */
     public function whoisIndex($domain)
     {        
         return new Index($this->callApi($domain, 'INDEX')->getContent());
+    }
+    
+    /**
+     * Retrieves the raw information about a whois record.
+     * 
+     * @param string $domain
+     * 
+     * @return Robowhois\Whois\Index
+     */
+    public function whoisrecord($domain)
+    {        
+        $response = json_decode($this->callApi($domain, 'RECORD')->getContent(), true);
+        
+        if (is_array($response) && isset($response['response'])) {
+          $result = $response['response'];
+          
+          if (is_array($result) && isset($result['record']) && isset($result['daystamp'])) {
+            return new Record($result['record'], $result['daystamp']);
+          }
+        }
+      
+        throw new Exception;
     }
     
     /**

@@ -61,7 +61,7 @@ class RobowhoisTest extends TestCase
     
     public function testDomainAvailability()
     {
-        $availability = $this->getWebService()->whoisAvailability('robowhois.com'); 
+        $availability = $this->getWebService()->whoisAvailability('robowhois.com');
         
         $this->assertFalse($availability['available']);
         $this->assertTrue($availability['registered']);
@@ -71,6 +71,13 @@ class RobowhoisTest extends TestCase
     {        
         $this->assertFalse($this->getWebService()->isAvailable('robowhois.com'));
         $this->assertTrue($this->getWebService()->isRegistered('robowhois.com'));
+    }
+    
+    public function testRecord()
+    {
+        $record = $this->getWebService()->whoisRecord('robowhois.com');
+
+        $this->assertInstanceOf('Robowhois\Whois\Record', $record);
     }
 
     protected function stripSpecials($content)
