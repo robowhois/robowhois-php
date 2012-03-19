@@ -64,23 +64,29 @@ class Robowhois
      * Retrieves the information about account
      * 
      * @return Robowhois\Whois\Account
+     * @todo exception message
      */
     public function whoisAccount()
     {
-        $response   = $this->callApi(null, 'ACCOUNT');
-
-        $values = json_decode($response->getContent(), true);
-        $value  = array_key_exists('account', $values) ? $values['account'] : null;
-
-        if (!count($value))  
-            throw new Exception();
-
-        $id                = array_key_exists('id', $value)                ? $value['id']                : null;
-        $email             = array_key_exists('email', $value)             ? $value['email']             : null;
-        $api_token         = array_key_exists('api_token', $value)         ? $value['api_token']         : null;
-        $credits_remaining = array_key_exists('credits_remaining', $value) ? $value['credits_remaining'] : null;
+        $response         = $this->callApi(null, 'ACCOUNT');
+        $values           = json_decode($response->getContent(), true);
+        $values           = isset($values['account']) ? $values['account'] : null;
+        $mandatoryValues  = array(
+            'id', 'email', 'api_token', 'credits_remaining'
+        );
         
-        return new Account($id, $email, $api_token, $credits_remaining);
+        foreach ($mandatoryValues as $value) {
+            if (!isset($values[$value])) {            
+              throw new Exception;
+            }
+        }
+        
+        return new Account(
+            $values['id'], 
+            $values['email'], 
+            $values['api_token'], 
+            $values['credits_remaining']
+        );
     }
 
     /**
