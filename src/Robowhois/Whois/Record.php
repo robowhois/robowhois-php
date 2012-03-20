@@ -44,12 +44,11 @@ class Record
     /**
      * Returns the daystamp associated with this record.
      *
-     * @return string
-     * @todo datetime
+     * @return DateTime|string
      */
-    public function getDaystamp()
+    public function getDaystamp($asString = false)
     {
-      return $this->daystamp;
+      return $asString ? $this->daystamp : new \DateTime($this->daystamp);
     }
     
     /**

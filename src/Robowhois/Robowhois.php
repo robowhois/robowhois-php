@@ -45,6 +45,7 @@ class Robowhois
     const API_AVAILABILITY_ENDPOINT  = "/whois/:domain/availability";
     const API_ACCOUNT_ENDPOINT       = "/account";
     const API_RECORD_ENDPOINT        = "/whois/:domain/record";
+    const API_RESPONSE_ERROR         = "There was an error while processing your request: Robowhois API sent a malformed response";
     
     
     /**
@@ -64,7 +65,6 @@ class Robowhois
      * Retrieves the information about account
      * 
      * @return Robowhois\Whois\Account
-     * @todo exception message
      */
     public function whoisAccount()
     {
@@ -76,8 +76,8 @@ class Robowhois
         );
         
         foreach ($mandatoryValues as $value) {
-            if (!isset($values[$value])) {            
-              throw new Exception;
+            if (!isset($values[$value])) {              
+                throw new Exception(self::API_RESPONSE_ERROR);
             }
         }
         
@@ -120,7 +120,6 @@ class Robowhois
      * @param string $domain
      * 
      * @return Array
-     * @todo meaningful exception message
      */
     public function whoisAvailability($domain)
     {      
@@ -128,7 +127,7 @@ class Robowhois
         $resultArray  = json_decode($response->getContent(), true);
         
         if (!is_array($resultArray) || !isset($resultArray['response'])) {
-          throw new Exception();
+          throw new Exception(self::API_RESPONSE_ERROR);
         }
         
         return $resultArray['response'];
@@ -140,7 +139,6 @@ class Robowhois
      * @param string $domain
      * 
      * @return Robowhois\Whois\Index
-     * @todo meaningful exception message
      */
     public function whoisIndex($domain)
     {        
@@ -153,9 +151,9 @@ class Robowhois
      * @param string $domain
      * 
      * @return Robowhois\Whois\Index
-     * @todo mmm nested IFs
+     * @todo mmm nested IFs for readability, but we should do something different
      */
-    public function whoisrecord($domain)
+    public function whoisRecord($domain)
     {        
         $response = json_decode($this->callApi($domain, 'RECORD')->getContent(), true);
         
@@ -167,7 +165,7 @@ class Robowhois
           }
         }
       
-        throw new Exception;
+        throw new Exception(self::API_RESPONSE_ERROR);
     }
     
     /**

@@ -50,7 +50,8 @@ class RobowhoisTest extends TestCase
         $robowhois  = new Robowhois("aaa", new Client);
         $whois     = $robowhois->whoisRecord($domain);
         
-        $this->assertEquals('2012-01-01', $whois->getDaystamp());
+        $this->assertEquals('2012-01-01', $whois->getDaystamp(true));
+        $this->assertEquals('2012-01-01', $whois->getDaystamp()->format('Y-m-d'));
         $this->assertEquals('MyRecord', $whois->getRecord());
         $this->assertInstanceOf('Robowhois\Whois\Record', $whois);
     }
