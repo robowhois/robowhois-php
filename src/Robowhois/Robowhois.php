@@ -21,7 +21,7 @@ namespace Robowhois;
 
 use Robowhois\Contract\Http\Client;
 use Robowhois\Whois\Index;
-use Robowhois\Whois\Account;
+use Robowhois\Account;
 use Robowhois\Whois\Record;
 use Robowhois\Http\Client as HttpClient;
 use Buzz\Browser;

@@ -18,7 +18,7 @@
  * @author      David Funaro <ing.davidino@gmail.com>
  */
 
-namespace Robowhois\Whois;
+namespace Robowhois;
 
 class Account
 {

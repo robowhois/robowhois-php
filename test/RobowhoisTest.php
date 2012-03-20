@@ -124,7 +124,7 @@ class RobowhoisTest extends TestCase
         $robowhois  = new Robowhois("aaa", new Client);
         $account    = $robowhois->whoisAccount();
 
-        $this->assertInstanceOf('Robowhois\Whois\Account', $account);
+        $this->assertInstanceOf('Robowhois\Account', $account);
         $this->assertEquals('4ef12dbfca71cce5fd000001', $account->getId());
         $this->assertEquals('email@example.com', $account->getEmail());
         $this->assertEquals('0123456789', $account->getApiToken());

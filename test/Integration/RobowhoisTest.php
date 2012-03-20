@@ -39,7 +39,7 @@ class RobowhoisTest extends TestCase
     public function testAccountInformation()
     {
         $account = $this->getWebService()->whoisAccount();  
-        $this->assertInstanceOf('Robowhois\Whois\Account', $account);
+        $this->assertInstanceOf('Robowhois\Account', $account);
     }
 
     /**
