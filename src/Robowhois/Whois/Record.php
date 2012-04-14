@@ -19,7 +19,9 @@
 
 namespace Robowhois\Whois;
 
-class Record
+use Robowhois\ArrayObject;
+
+class Record extends ArrayObject
 {
     protected $record;
     protected $daystamp;
@@ -27,37 +29,15 @@ class Record
     /**
      * Creates a new Record from its raw content and daystamp.
      * 
-     * @param string $record
-     * @param string $daystamp
+     * @param array $record
      */
-    public function __construct($record, $daystamp)
+    public function __construct(array $record)
     {
-        $this->record   = $record;
-        $this->daystamp = $daystamp;
+        $this->data = $record;
     }
     
     public function __toString()
     {
         return $this->getRecord();
-    }
-    
-    /**
-     * Returns the daystamp associated with this record.
-     *
-     * @return DateTime|string
-     */
-    public function getDaystamp($asString = false)
-    {
-      return $asString ? $this->daystamp : new \DateTime($this->daystamp);
-    }
-    
-    /**
-     * Returns the raw record informations.
-     * 
-     * @return string
-     */
-    public function getRecord()
-    {
-        return $this->record;
     }
 }

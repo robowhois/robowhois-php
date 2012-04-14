@@ -27,19 +27,13 @@ class RobowhoisTest extends TestCase
 {   
     public function testWhoisIndex()
     {
-        $domain     = 'www.index.com';
-        $filePath   = __DIR__.'/bin/'. $domain;
-        $robowhois  = new Robowhois("aaa", new Client);
-        $index      = $robowhois->whois($domain);
+        $domain         = 'www.index.com';
+        $filePath       = __DIR__.'/bin/'. $domain;
+        $robowhois      = new Robowhois("aaa", new Client);
+        $index          = $robowhois->whois($domain);        
+        $fileContents   = Client::getContent($domain);
         
-        ob_start();
-        echo $index;
-        $content = ob_get_contents();
-        ob_end_clean();
-        
-        $fileContents = Client::getContent($domain);
-        
-        $this->assertEquals($content, $fileContents);
+        $this->assertEquals($fileContents, $index['content']);
         $this->assertInstanceOf('Robowhois\Whois\Index', $index);
     }
     
@@ -50,9 +44,8 @@ class RobowhoisTest extends TestCase
         $robowhois  = new Robowhois("aaa", new Client);
         $whois     = $robowhois->whoisRecord($domain);
         
-        $this->assertEquals('2012-01-01', $whois->getDaystamp(true));
-        $this->assertEquals('2012-01-01', $whois->getDaystamp()->format('Y-m-d'));
-        $this->assertEquals('MyRecord', $whois->getRecord());
+        $this->assertEquals('2012-01-01', $whois['daystamp']);
+        $this->assertEquals('MyRecord', $whois['record']);
         $this->assertInstanceOf('Robowhois\Whois\Record', $whois);
     }
     
@@ -125,9 +118,10 @@ class RobowhoisTest extends TestCase
         $account    = $robowhois->account();
 
         $this->assertInstanceOf('Robowhois\Account', $account);
-        $this->assertEquals('4ef12dbfca71cce5fd000001', $account->getId());
-        $this->assertEquals('email@example.com', $account->getEmail());
-        $this->assertEquals('0123456789', $account->getApiToken());
+        $this->assertEquals('4ef12dbfca71cce5fd000001', $account['id']);
+        $this->assertEquals('email@example.com', $account['email']);
+        $this->assertEquals('0123456789', $account['api_token']);
+        $this->assertEquals(480, $account['credits_remaining']);
         $this->assertEquals(480, $account->getCreditsRemaining());
     }
     

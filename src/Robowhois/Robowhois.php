@@ -65,22 +65,8 @@ class Robowhois
         $response         = $this->callApi(null, 'ACCOUNT');
         $values           = json_decode($response->getContent(), true);
         $values           = isset($values['account']) ? $values['account'] : null;
-        $mandatoryValues  = array(
-            'id', 'email', 'api_token', 'credits_remaining'
-        );
         
-        foreach ($mandatoryValues as $value) {
-            if (!isset($values[$value])) {              
-                throw new Exception(self::API_RESPONSE_ERROR);
-            }
-        }
-        
-        return new Account(
-            $values['id'], 
-            $values['email'], 
-            $values['api_token'], 
-            $values['credits_remaining']
-        );
+        return new Account($values);
     }
 
     /**
@@ -155,7 +141,7 @@ class Robowhois
           $result = $response['response'];
           
           if (is_array($result) && isset($result['record']) && isset($result['daystamp'])) {
-            return new Record($result['record'], $result['daystamp']);
+            return new Record($result);
           }
         }
       

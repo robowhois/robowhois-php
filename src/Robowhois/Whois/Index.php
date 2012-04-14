@@ -19,7 +19,9 @@
 
 namespace Robowhois\Whois;
 
-class Index
+use Robowhois\ArrayObject;
+
+class Index extends ArrayObject
 {
     protected $content;
     
@@ -30,21 +32,11 @@ class Index
      */
     public function __construct($content)
     {
-        $this->content = $content;
+        $this->data = array('content' => $content);
     }
     
     public function __toString()
     {
         return $this->getContent();
-    }
-    
-    /**
-     * Returns the raw WHOIS informations for this object.
-     *
-     * @return string
-     */
-    public function getContent()
-    {
-        return $this->content;
     }
 }
