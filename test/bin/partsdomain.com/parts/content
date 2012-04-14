@@ -1,0 +1,15 @@
+{
+  "response": {
+    "daystamp": "2011-08-23",
+    "parts": [
+      {
+        "body": "\nWhois Server Version 2.0\n\nDomain names in the .com and .net domains can now be registered\nwith many different competing registrars. \n\n   Server Name: EXAMPLE.COM.RAFAELYALUFF.COM\n   IP Address: 173.203.204.123\n   Registrar: DOMAIN.COM, LLC\n   Whois Server: whois.domain.com\n   Referral URL: http://www.domain.com\n\n   Server Name: EXAMPLE.COM.AU\n   Registrar: ENETICA PTY LTD\n   Whois Server: whois.enetica.com.au\n   Referral URL: http://www.enetica.com.au\n\n   Domain Name: EXAMPLE.COM\n   Registrar: RESERVED-INTERNET ASSIGNED NUMBERS AUTHORITY\n   Whois Server: whois.iana.org\n   Referral URL: http://res-dom.iana.org\n   Name Server: A.IANA-SERVERS.NET\n   Name Server: B.IANA-SERVERS.NET\n   Status: clientDeleteProhibited\n   Status: clientTransferProhibited\n   Status: clientUpdateProhibited\n   Updated Date: 14-aug-2011\n   Creation Date: 14-aug-1995\n   Expiration Date: 13-aug-2012\n",
+        "host": "whois.crsnic.net"
+      },
+      {
+        "body": "% IANA WHOIS server\n% for more information on IANA, visit http://www.iana.org\n% This query returned 1 object\n\ndomain:       EXAMPLE.COM\n\norganisation: Internet Assigned Numbers Authority\n\ncreated:      1992-01-01\nsource:       IANA\n\n",
+        "host": "whois.iana.org"
+      }
+    ]
+  }
+}

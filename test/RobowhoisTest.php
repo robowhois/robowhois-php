@@ -158,6 +158,18 @@ class RobowhoisTest extends TestCase
         $domain     = $robowhois->whoisProperties('propertydomain.com');
 
         $this->assertEquals('2011-08-23', $domain['daystamp']);
+        $this->assertInstanceOf('Robowhois\ArrayObject', $domain->getProperties());
+        $this->assertInstanceOf('Robowhois\ArrayObject', $domain->getProperties()->getRegistrar());
+    }
+    
+    public function testWhoisParts()
+    {
+        $robowhois  = new Robowhois("aaa", new Client);
+        $domain     = $robowhois->whoisParts('partsdomain.com');
+
+        $this->assertEquals('2011-08-23', $domain['daystamp']);
+        $this->assertInstanceOf('Robowhois\ArrayObject', $domain->getParts());
+        $this->assertNotEmpty($domain['parts'][0]['body']);
     }
 }
 

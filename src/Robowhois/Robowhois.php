@@ -23,6 +23,7 @@ use Robowhois\Contract\Http\Client;
 use Robowhois\Whois\Index;
 use Robowhois\Account;
 use Robowhois\Whois\Record;
+use Robowhois\Whois\Parts;
 use Robowhois\Whois\Properties;
 use Robowhois\Http\Client as HttpClient;
 use Buzz\Browser;
@@ -38,6 +39,7 @@ class Robowhois
     const API_ENTRY_POINT            = "http://api.robowhois.com";
     const API_INDEX_ENDPOINT         = "/whois/:domain";
     const API_PROPERTIES_ENDPOINT    = "/whois/:domain/properties";
+    const API_PARTS_ENDPOINT         = "/whois/:domain/parts";
     const API_AVAILABILITY_ENDPOINT  = "/whois/:domain/availability";
     const API_ACCOUNT_ENDPOINT       = "/account";
     const API_RECORD_ENDPOINT        = "/whois/:domain/record";
@@ -129,6 +131,29 @@ class Robowhois
         return new Index(array('content' => $content));
     }
     
+    /**
+     * Returns the parts of the given $domain.
+     *
+     * @param   string $domain
+     * @return  Robowhois\Whois\Parts
+     */
+    public function whoisParts($domain)
+    {
+        $response = json_decode($this->callApi($domain, 'PARTS')->getContent(), true);
+        
+        if (is_array($response) && isset($response['response'])) {
+            return new Parts($response['response']);
+        }
+      
+        throw new Exception(self::API_RESPONSE_ERROR);
+    }
+    
+    /**
+     * Returns the properties of the given $domain.
+     *
+     * @param   string $domain
+     * @return  Robowhois\Index\Properties 
+     */
     public function whoisProperties($domain)
     {
         $response = json_decode($this->callApi($domain, 'PROPERTIES')->getContent(), true);

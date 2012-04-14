@@ -23,7 +23,7 @@ namespace Robowhois;
 
 use Doctrine\Common\Util\Inflector;
 
-abstract class ArrayObject implements \ArrayAccess
+class ArrayObject implements \ArrayAccess
 {
     protected $data = array();
     
@@ -46,7 +46,13 @@ abstract class ArrayObject implements \ArrayAccess
         $offset = Inflector::tableize(substr($name, 3));
         
         if (isset($this[$offset])) {
-            return $this[$offset];
+            $data = $this[$offset];
+            
+            if (is_array($data)) {
+                return new ArrayObject($data);
+            }
+            
+            return $data;
         }
         
         throw new Exception(sprintf(
