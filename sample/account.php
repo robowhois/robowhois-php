@@ -8,7 +8,7 @@ require 'vendor/.composer/autoload.php';
 $robowhois = new Robowhois('INSERT-YOUR-API-KEY-HERE');
 
 try {
-    $account =  $robowhois->whoisAccount();
+    $account =  $robowhois->account();
 
     echo $account->getCreditsRemaining();
 } catch (Exception $e) {
