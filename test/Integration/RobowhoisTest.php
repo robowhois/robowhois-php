@@ -30,7 +30,7 @@ class RobowhoisTest extends TestCase
     public function testIndexOfRobowhoisdotcom()
     {        
         $domain                 = "robowhois.com";
-        $index                  = $this->getWebService()->whoisIndex($domain);
+        $index                  = $this->getWebService()->whois($domain);
 
         $this->assertEquals($this->stripSpecials($index->getContent()),  $this->stripSpecials(StubClient::getContent($domain)));
         $this->assertInstanceOf('Robowhois\Whois\Index', $index);
@@ -38,36 +38,36 @@ class RobowhoisTest extends TestCase
 
     public function testAccountInformation()
     {
-        $account = $this->getWebService()->whoisAccount();  
+        $account = $this->getWebService()->account();  
         $this->assertInstanceOf('Robowhois\Account', $account);
     }
 
     /**
-     * @expectedException Robowhois\Exception\Http\request\Bad 
+     * @expectedException Robowhois\Exception
      */
     public function testIndexOfANonExistingDomain()
     {        
         $domain                 = "robowhois.com" . 123467;
-        $index                  = $this->getWebService()->whoisIndex($domain);
+        $index                  = $this->getWebService()->whois($domain);
 
         $this->assertInstanceOf('Robowhois\Whois\Index', $index);
     }
     
     /**
-     * @expectedException Robowhois\Exception\Http\Request\Unauthorized 
+     * @expectedException Robowhois\Exception
      */
     public function testExecutingUnauthenticatedRequests()
     {        
         $domain                 = "robowhois.com";
         $robowhois              = new Robowhois("...");
-        $index                  = $robowhois->whoisIndex($domain);
+        $index                  = $robowhois->whois($domain);
         $this->assertEquals($this->stripSpecials($index->getContent()), $this->stripSpecials(StubClient::getContent($domain)));
         $this->assertInstanceOf('Robowhois\Whois\Index', $index);
     }
     
     public function testDomainAvailability()
     {
-        $availability = $this->getWebService()->whoisAvailability('robowhois.com');
+        $availability = $this->getWebService()->domainAvailability('robowhois.com');
         
         $this->assertFalse($availability['available']);
         $this->assertTrue($availability['registered']);

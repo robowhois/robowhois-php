@@ -60,7 +60,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf(
                 "\Symfony\Component\HttpFoundation\Response",
-                $this->client->get('http://www.google.com')
+                $this->client->get('http://localhost')
         );
     }
 }

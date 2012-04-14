@@ -30,7 +30,7 @@ class RobowhoisTest extends TestCase
         $domain     = 'www.index.com';
         $filePath   = __DIR__.'/bin/'. $domain;
         $robowhois  = new Robowhois("aaa", new Client);
-        $index      = $robowhois->whoisIndex($domain);
+        $index      = $robowhois->whois($domain);
         
         ob_start();
         echo $index;
@@ -57,72 +57,72 @@ class RobowhoisTest extends TestCase
     }
     
     /**
-     * @expectedException Robowhois\Exception\Http\Request\Unauthorized 
+     * @expectedException Robowhois\Exception 
      */
     public function testAnExceptionIsRaisedWhenExecutingRequestsWithAnInvalidApiKey()
     {
         $robowhois  = new Robowhois("aaa", new Client);
-        $index      = $robowhois->whoisIndex('wrongapikey.com');      
+        $index      = $robowhois->whois('wrongapikey.com');      
     }
     
     /**
-     * @expectedException Robowhois\Exception\Http\Response\NotFound
+     * @expectedException Robowhois\Exception
      */
     public function testAnExceptionIsRaisedWhenExecutingRequestsToNonExistingAPIEndpoints()
     {
         $robowhois  = new Robowhois("aaa", new Client);
-        $robowhois->whoisIndex('notfound.com'); 
+        $robowhois->whois('notfound.com'); 
     }
     
     /**
-     * @expectedException Robowhois\Exception\Http\Response\BadGateway
+     * @expectedException Robowhois\Exception
      */
     public function testAnExceptionIsRaisedWhenABadgatewayErrorOccurs()
     {
         $robowhois  = new Robowhois("aaa", new Client);
-        $robowhois->whoisIndex('502.com'); 
+        $robowhois->whois('502.com'); 
     }
     
     /**
-     * @expectedException Robowhois\Exception\Http\Response\ServerError
+     * @expectedException Robowhois\Exception
      */
     public function testAnExceptionIsRaisedWhenAnIntervalServerErrorOccurs()
     {
         $robowhois  = new Robowhois("aaa", new Client);
-        $robowhois->whoisIndex('500.com'); 
+        $robowhois->whois('500.com'); 
     }
 
     /**
-     * @expectedException Robowhois\Exception\Http\Response\VoidResponse
+     * @expectedException Robowhois\Exception
      */
     public function testAnExceptionIsRaisedWhenVoidResponse()
     {
         $robowhois  = new Robowhois("aaa", new Client);
-        $robowhois->whoisIndex('void.com'); 
+        $robowhois->whois('void.com'); 
     }
     
     /**
-     * @expectedException Robowhois\Exception\Http\Request\Bad
+     * @expectedException Robowhois\Exception
      */
     public function testAGenericErrorRaisesABadRequestException()
     {
         $robowhois  = new Robowhois("aaa", new Client);
-        $robowhois->whoisIndex('400.com'); 
+        $robowhois->whois('400.com'); 
     }
     
     /**
-     * @expectedException Robowhois\Exception\Http
+     * @expectedException Robowhois\Exception
      */
     public function testAnUnknownErrorRaisesAGenericException()
     {
         $robowhois  = new Robowhois("aaa", new Client);
-        $robowhois->whoisIndex('409.com');
+        $robowhois->whois('409.com');
     }
 
     public function testGetAccountInformation()
     {
         $robowhois  = new Robowhois("aaa", new Client);
-        $account    = $robowhois->whoisAccount();
+        $account    = $robowhois->account();
 
         $this->assertInstanceOf('Robowhois\Account', $account);
         $this->assertEquals('4ef12dbfca71cce5fd000001', $account->getId());
@@ -137,13 +137,13 @@ class RobowhoisTest extends TestCase
     public function testDomainAvailabilityWithAMalformedResponse()
     {
         $robowhois  = new Robowhois("aaa", new Client);
-        $availability = $robowhois->whoisAvailability('availablebutmalformed.com'); 
+        $availability = $robowhois->domainAvailability('availablebutmalformed.com'); 
     }
     
     public function testADomainIsAvailable()
     {
         $robowhois  = new Robowhois("aaa", new Client);
-        $availability = $robowhois->whoisAvailability('available.com'); 
+        $availability = $robowhois->domainAvailability('available.com'); 
         
         $this->assertTrue($availability['available']);
         $this->assertFalse($availability['registered']);

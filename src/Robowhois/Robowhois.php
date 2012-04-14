@@ -25,14 +25,8 @@ use Robowhois\Account;
 use Robowhois\Whois\Record;
 use Robowhois\Http\Client as HttpClient;
 use Buzz\Browser;
+use Symfony\Component\HttpFoundation\Response;
 use Robowhois\Exception;
-use Robowhois\Exception\Http as HttpException;
-use Robowhois\Exception\Http\Request\Unauthorized as UnauthorizedRequest;
-use Robowhois\Exception\Http\Request\Bad as BadRequest;
-use Robowhois\Exception\Http\Response\NotFound as ResourceNotFound;
-use Robowhois\Exception\Http\Response\BadGateway as BadGatewayException;
-use Robowhois\Exception\Http\Response\ServerError as InternalServerError;
-use Robowhois\Exception\Http\Response as ResponseException;
 use Robowhois\Exception\Http\Response\VoidResponse;
 
 class Robowhois
@@ -66,7 +60,7 @@ class Robowhois
      * 
      * @return Robowhois\Whois\Account
      */
-    public function whoisAccount()
+    public function account()
     {
         $response         = $this->callApi(null, 'ACCOUNT');
         $values           = json_decode($response->getContent(), true);
@@ -97,7 +91,7 @@ class Robowhois
      */
     public function isAvailable($domain)
     {
-        $availability = $this->whoisAvailability($domain);
+        $availability = $this->domainAvailability($domain);
       
         return $availability['available'];
     }
@@ -121,7 +115,7 @@ class Robowhois
      * 
      * @return Array
      */
-    public function whoisAvailability($domain)
+    public function domainAvailability($domain)
     {      
         $response     = $this->callApi($domain, 'AVAILABILITY');
         $resultArray  = json_decode($response->getContent(), true);
@@ -140,7 +134,7 @@ class Robowhois
      * 
      * @return Robowhois\Whois\Index
      */
-    public function whoisIndex($domain)
+    public function whois($domain)
     {        
         return new Index($this->callApi($domain, 'INDEX')->getContent());
     }
@@ -187,6 +181,23 @@ class Robowhois
     }
     
     /**
+     * Checks whether the given $content is empty: if so, throws an exception
+     * since the API server did not provide informations for the sent request.
+     *
+     * @param   string $content
+     * @param   string $uri 
+     * @return  null
+     * @throws  Robowhois\Exception
+     */
+    protected function checkResponseContent($content = null, $uri) {
+        if (empty($content)) {
+            $message = sprintf("Empty response from resource %s", $uri);
+
+            throw new Exception($message);
+        }
+    }
+    
+    /**
      * Returns the API key associated with this Robowhois instance.
      *
      * @return string
@@ -211,13 +222,6 @@ class Robowhois
      *
      * @param   string $uri
      * @return  Symfony\Component\HttpFoundation\Response
-     * @throws  Robowhois\Exception\Http\Response\VoidResponse
-     * @throws  Robowhois\Exception\Http
-     * @throws  Robowhois\Exception\Http\Request\Unauthorized
-     * @throws  Robowhois\Exception\Http\Request\Bad
-     * @throws  Robowhois\Exception\Http\Response\NotFound
-     * @throws  Robowhois\Exception\Http\Response\BadGateway
-     * @throws  Robowhois\Exception\Http\Response\ServerError
      * @throws  Robowhois\Exception\Http\Response
      */
     protected function retrieveResponse($uri)
@@ -226,25 +230,29 @@ class Robowhois
       
         switch ($response->getStatusCode()) {
             case 200:
-                if ($response->getContent())
-                    return $response;
-                
-                throw new VoidResponse($response,$uri);
-            case 400:
-                throw new BadRequest($response, $uri);
-            case 401:
-                throw new UnauthorizedRequest($this->getApiKey());
-            case 404:
-                throw new ResourceNotFound($response, $uri);
-            case 422:
-                throw new ResponseException($response, $uri);
-            case 502:
-                throw new BadGatewayException($response, $uri);
-            case 500:
-                throw new InternalServerError($response, $uri);
+                $this->checkResponseContent($response->getContent(), $uri);
+                    
+                return $response;
             default:
-                throw new HttpException($response);
+                $this->throwApiError($response);
         }
+    }
+    
+    /**
+     * Throws a generic API error due to an invalid HTTP response.
+     *
+     * @param   Response $response 
+     * @throws  Robowhois\Exception
+     */
+    protected function throwApiError(Response $response)
+    {                
+        $message = sprintf(
+                "Status code %d\r\n%s",
+                $response->getStatusCode(),
+                $response->getContent()
+        );
+
+        throw new Exception($message);
     }
 }
 
