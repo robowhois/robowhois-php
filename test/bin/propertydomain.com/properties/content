@@ -1,0 +1,103 @@
+{
+  "response": {
+    "daystamp": "2011-08-23",
+    "properties": {
+      "disclaimer": "Please note that the following result could be a subgroup of the data contained in the database. Additional information can be visualized at: http://www.nic.it/cgi-bin/Whois/whois.cgi",
+      "domain": "google.it",
+      "domain_id": null,
+      "referral_whois": null,
+      "referral_url": null,
+      "status": "registered",
+      "available?": false,
+      "registered?": true,
+      "created_on": "1999-12-10T00:00:00-05:00",
+      "updated_on": "2010-12-13T01:11:33-05:00",
+      "expires_on": "2011-11-27T00:00:00-05:00",
+      "registrar": {
+        "id": "REGISTER-REG",
+        "name": "REGISTER-REG",
+        "organization": "Register.it s.p.a.",
+        "url": null
+      },
+      "registrant_contacts": [
+        {
+          "id": "GOOG175",
+          "type": 1,
+          "name": "Google Ireland Holdings",
+          "organization": "Google Ireland Holdings",
+          "address": "70 Sir John Rogersons Quay",
+          "city": "Dublin",
+          "zip": "2",
+          "state": "IE",
+          "country": null,
+          "country_code": "IE",
+          "phone": null,
+          "fax": null,
+          "email": null,
+          "created_on": "2008-11-27T16:47:22-05:00",
+          "updated_on": "2011-01-12T07:57:37-05:00"
+        }
+      ],
+      "admin_contacts": [
+        {
+          "id": "TT4277",
+          "type": 2,
+          "name": "Tsao Tu",
+          "organization": "Tu Tsao",
+          "address": "70 Sir John Rogersons Quay",
+          "city": "Dublin",
+          "zip": "2",
+          "state": "IE",
+          "country": null,
+          "country_code": "IE",
+          "phone": null,
+          "fax": null,
+          "email": null,
+          "created_on": "2008-11-27T16:47:22-05:00",
+          "updated_on": "2011-01-12T07:58:12-05:00"
+        }
+      ],
+      "technical_contacts": [
+        {
+          "id": "2409-REGT",
+          "type": 3,
+          "name": "Technical Support",
+          "organization": "Register.it S.p.A.",
+          "address": "Via Montessori s/n",
+          "city": "Bergamo",
+          "zip": "24126",
+          "state": "BG",
+          "country": null,
+          "country_code": "IT",
+          "phone": null,
+          "fax": null,
+          "email": null,
+          "created_on": "2009-09-28T11:01:09-04:00",
+          "updated_on": "2009-09-28T11:01:09-04:00"
+        }
+      ],
+      "nameservers": [
+        {
+          "name": "ns1.google.com",
+          "ipv4": null,
+          "ipv6": null
+        },
+        {
+          "name": "ns4.google.com",
+          "ipv4": null,
+          "ipv6": null
+        },
+        {
+          "name": "ns2.google.com",
+          "ipv4": null,
+          "ipv6": null
+        },
+        {
+          "name": "ns3.google.com",
+          "ipv4": null,
+          "ipv6": null
+        }
+      ]
+    }
+  }
+}

@@ -151,5 +151,13 @@ class RobowhoisTest extends TestCase
         $this->assertTrue($robowhois->isAvailable('available.com'));
         $this->assertFalse($robowhois->isRegistered('available.com'));
     }
+    
+    public function testWhoisProperties()
+    {
+        $robowhois  = new Robowhois("aaa", new Client);
+        $domain     = $robowhois->whoisProperties('propertydomain.com');
+
+        $this->assertEquals('2011-08-23', $domain['daystamp']);
+    }
 }
 

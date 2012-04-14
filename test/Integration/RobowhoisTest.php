@@ -85,6 +85,13 @@ class RobowhoisTest extends TestCase
 
         $this->assertInstanceOf('Robowhois\Whois\Record', $record);
     }
+    
+    public function testProperties()
+    {
+        $record = $this->getWebService()->whoisProperties('robowhois.com');
+
+        $this->assertInstanceOf('Robowhois\Whois\Properties', $record);
+    }
 
     protected function stripSpecials($content)
     {

@@ -22,11 +22,4 @@ namespace Robowhois;
 
 class Account extends ArrayObject
 {
-    /**
-     * @param array  $data
-     */
-    public function __construct($data)
-    {
-        $this->data = $data;
-    }
 }

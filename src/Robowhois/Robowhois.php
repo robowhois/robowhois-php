@@ -23,6 +23,7 @@ use Robowhois\Contract\Http\Client;
 use Robowhois\Whois\Index;
 use Robowhois\Account;
 use Robowhois\Whois\Record;
+use Robowhois\Whois\Properties;
 use Robowhois\Http\Client as HttpClient;
 use Buzz\Browser;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,6 +37,7 @@ class Robowhois
 
     const API_ENTRY_POINT            = "http://api.robowhois.com";
     const API_INDEX_ENDPOINT         = "/whois/:domain";
+    const API_PROPERTIES_ENDPOINT    = "/whois/:domain/properties";
     const API_AVAILABILITY_ENDPOINT  = "/whois/:domain/availability";
     const API_ACCOUNT_ENDPOINT       = "/account";
     const API_RECORD_ENDPOINT        = "/whois/:domain/record";
@@ -122,7 +124,20 @@ class Robowhois
      */
     public function whois($domain)
     {        
-        return new Index($this->callApi($domain, 'INDEX')->getContent());
+        $content = $this->callApi($domain, 'INDEX')->getContent();
+        
+        return new Index(array('content' => $content));
+    }
+    
+    public function whoisProperties($domain)
+    {
+        $response = json_decode($this->callApi($domain, 'PROPERTIES')->getContent(), true);
+        
+        if (is_array($response) && isset($response['response'])) {
+            return new Properties($response['response']);
+        }
+      
+        throw new Exception(self::API_RESPONSE_ERROR);
     }
     
     /**

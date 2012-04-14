@@ -27,6 +27,11 @@ abstract class ArrayObject implements \ArrayAccess
 {
     protected $data = array();
     
+    public function __construct($data)
+    {
+        $this->data = $data;
+    }
+    
     /**
      * Magic method used to implement getters.
      * If $this->data contains 'arrayIndex' you'll be able to call

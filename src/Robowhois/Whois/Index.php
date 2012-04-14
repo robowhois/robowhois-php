@@ -22,19 +22,7 @@ namespace Robowhois\Whois;
 use Robowhois\ArrayObject;
 
 class Index extends ArrayObject
-{
-    protected $content;
-    
-    /**
-     * Creates a new raw WHOIS record.
-     * 
-     * @param string $content
-     */
-    public function __construct($content)
-    {
-        $this->data = array('content' => $content);
-    }
-    
+{    
     public function __toString()
     {
         return $this->getContent();

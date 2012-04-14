@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Robowhois package.
+ * This file is part of the Orient package.
  *
  * (c) Alessandro Nadalin <alessandro.nadalin@gmail.com>
  *
@@ -10,9 +10,10 @@
  */
 
 /**
- * Class Record
+ * Class Properties
  *
- * @package     Robowhois
+ * @package     
+ * @subpackage  
  * @author      Alessandro Nadalin <alessandro.nadalin@gmail.com>
  * @author      David Funaro <ing.davidino@gmail.com>
  */
@@ -21,10 +22,7 @@ namespace Robowhois\Whois;
 
 use Robowhois\ArrayObject;
 
-class Record extends ArrayObject
-{        
-    public function __toString()
-    {
-        return $this->getRecord();
-    }
+class Properties extends ArrayObject
+{
 }
+
