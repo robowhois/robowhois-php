@@ -139,7 +139,7 @@ class Robowhois
      */
     public function whoisParts($domain)
     {
-        $response = json_decode($this->callApi($domain, 'PARTS')->getContent(), true);
+        $response = $this->decodeApiCall($domain, 'PARTS');
         
         if (is_array($response) && isset($response['response'])) {
             return new Parts($response['response']);
@@ -156,7 +156,7 @@ class Robowhois
      */
     public function whoisProperties($domain)
     {
-        $response = json_decode($this->callApi($domain, 'PROPERTIES')->getContent(), true);
+        $response = $this->decodeApiCall($domain, 'PROPERTIES');
         
         if (is_array($response) && isset($response['response'])) {
             return new Properties($response['response']);
@@ -175,7 +175,7 @@ class Robowhois
      */
     public function whoisRecord($domain)
     {        
-        $response = json_decode($this->callApi($domain, 'RECORD')->getContent(), true);
+        $response = $this->decodeApiCall($domain, 'RECORD');
         
         if (is_array($response) && isset($response['response'])) {
           $result = $response['response'];
@@ -221,6 +221,18 @@ class Robowhois
 
             throw new Exception($message);
         }
+    }
+    
+    /**
+     * JSON-decodes the content of the $type API response for the given $domain.
+     *
+     * @param   string $domain
+     * @param   string $type
+     * @return  array
+     */
+    protected function decodeApiCall($domain, $type)
+    {
+        return json_decode($this->callApi($domain, $type)->getContent(), true);
     }
     
     /**
