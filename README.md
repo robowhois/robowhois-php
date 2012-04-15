@@ -41,7 +41,7 @@ a set of convenient methods for accessing data returned by the API.
 Thanks to this class you are able to access objects' properties as arrays'
 ones:
 
-    $account = $robowhois->whoisAccount();
+    $account = $robowhois->account();
 
     // $account is an instance of Robowhois\Account
     echo $account['credits_remaining'];
@@ -65,7 +65,7 @@ making requests to the Robowhois webservice:
     $robowhois = new Robowhois('INSERT-YOUR-API-KEY-HERE');
 
     try {
-        $account =  $robowhois->whoisAccount();
+        $account =  $robowhois->account();
 
         echo $account->getCreditsRemaining();
     } catch (Exception $e) {
