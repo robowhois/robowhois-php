@@ -24,6 +24,31 @@ standard: there is an auto-generated autoloader that you can use:
 
     require 'vendor/.composer/autoload.php';
 
+## A brief note on the docs
+
+We try to provide an efficient way to document the features of this client, but
+bare in mind that, given Robowhois API can change, this doc may be updated
+(last revision: 04/16/2012): we strongly recommend to take a look at the
+[tests](https://github.com/robowhois/robowhois-php/tree/master/test)
+provided by this library as they are the simplest way to get in touch with
+the working code.
+
+## Objects as array
+
+Robowhois objects extend the class `Robowhois\ArrayObject`, used to provide
+a set of convenient methods for accessing data returned by the API.
+
+Thanks to this class you are able to access objects' properties as arrays'
+ones:
+
+    $account = $robowhois->whoisAccount();
+
+    echo $account['credits_remaining'];
+
+and you can also rely on magic methods to convert those indexes in getters:
+
+    echo $account->getCreditsRemaining();
+
 ## Consuming the account API
 
 The *account* API is supposed to return informations about the account which is
@@ -105,6 +130,60 @@ You can take a look at the `sample/record.php` script provided inside this
 repository, or run it
 
     php sample/record.php
+
+## Consuming the properties API
+
+The *properties* API is supposed to return the parsed WHOIS record for a
+domain:
+
+    <?php
+
+    use Robowhois\Robowhois;
+    use Robowhois\Exception;
+
+    require 'vendor/.composer/autoload.php';
+
+    $robowhois = new Robowhois('INSERT-YOUR-API-KEY-HERE');
+
+    try {
+        $domain = $robowhois->whoisProperties('robowhois.com');
+    
+        echo $domain['properties']['created_on'] . "\n";
+    } catch (Exception $e) {
+        echo "The following error occurred: " . $e->getMessage();
+    }
+
+You can take a look at the `sample/properties.php` script provided inside this
+repository, or run it
+
+    php sample/properties.php
+
+## Consuming the parts API
+
+The *parts* API is supposed to return  the WHOIS record for a domain without
+merging the one or more responses returned by the contacted WHOIS server(s):
+
+    <?php
+
+    use Robowhois\Robowhois;
+    use Robowhois\Exception;
+
+    require 'vendor/.composer/autoload.php';
+
+    $robowhois = new Robowhois('INSERT-YOUR-API-KEY-HERE');
+
+    try {
+        $domain = $robowhois->whoisParts('robowhois.com');
+    
+        echo $domain['parts'][0]['body'] . "\n";
+    } catch (Exception $e) {
+        echo "The following error occurred: " . $e->getMessage();
+    }
+
+You can take a look at the `sample/properties.php` script provided inside this
+repository, or run it
+
+    php sample/properties.php
 
 ## Consuming the availability API
 

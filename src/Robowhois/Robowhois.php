@@ -4,6 +4,7 @@
  * This file is part of the Robowhois package.
  *
  * (c) Alessandro Nadalin <alessandro.nadalin@gmail.com>
+ * (c) David Funaro <ing.davidino@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -105,7 +106,7 @@ class Robowhois
      * 
      * @return Array
      */
-    public function domainAvailability($domain)
+    public function whoisAvailability($domain)
     {      
         $response     = $this->callApi($domain, 'AVAILABILITY');
         $resultArray  = json_decode($response->getContent(), true);

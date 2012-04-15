@@ -13,7 +13,7 @@ try {
     );
 
     foreach ($domains as $domain) {
-        $availability = $robowhois->domainAvailability($domain);
+        $availability = $robowhois->whoisAvailability($domain);
 
         if ($availability['available']) {
             echo sprintf("%s is available!", $domain) . "\n";
