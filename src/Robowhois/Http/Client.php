@@ -33,13 +33,11 @@ class Client implements HttpClient
     /**
     * Creates a new instance of an HTTP client customized for Robowhois APIs.
     *
-    * @param string  $apiKey   The api key of Robowhois
     * @param Browser $adapter  The HTTP adapter used to make HTTP requests
     */
     public function __construct(Browser $adapter = null)
     {
-        $this->adapter  = $adapter ?: new Browser;
-        $this->configureAdapter();
+        $this->adapter  = $adapter ?: $this->getDefaultAdapter();
     }
     
     /**
@@ -73,9 +71,14 @@ class Client implements HttpClient
     /**
     * Configures the adapter for authentication against the Robowhois API. 
     */
-    protected function configureAdapter()
+    protected function getDefaultAdapter()
     {
-        $this->getAdapter()->setClient(new \Buzz\Client\Curl);
+        $adapter  = new Browser;
+        $client   = new \Buzz\Client\Curl();
+        $client->setTimeout(5);
+        $adapter->setClient($client);
+        
+        return $adapter;
     }
   
     /**

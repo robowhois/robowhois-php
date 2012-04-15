@@ -171,18 +171,13 @@ class Robowhois
      * @param string $domain
      * 
      * @return Robowhois\Whois\Index
-     * @todo mmm nested IFs for readability, but we should do something different
      */
     public function whoisRecord($domain)
     {        
         $response = $this->decodeApiCall($domain, 'RECORD');
         
         if (is_array($response) && isset($response['response'])) {
-          $result = $response['response'];
-          
-          if (is_array($result) && isset($result['record']) && isset($result['daystamp'])) {
-            return new Record($result);
-          }
+            return new Record($response['response']);
         }
       
         throw new Exception(self::API_RESPONSE_ERROR);
