@@ -43,6 +43,7 @@ ones:
 
     $account = $robowhois->whoisAccount();
 
+    // $account is an instance of Robowhois\Account
     echo $account['credits_remaining'];
 
 and you can also rely on magic methods to convert those indexes in getters:
