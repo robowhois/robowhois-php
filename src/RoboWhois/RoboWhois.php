@@ -68,6 +68,11 @@ class RoboWhois
     {
         $response         = $this->callApi(null, 'ACCOUNT');
         $values           = json_decode($response->getContent(), true);
+        
+        if (!is_array($values)) {
+            throw new Exception(self::API_RESPONSE_ERROR);
+        }
+        
         $values           = isset($values['account']) ? $values['account'] : null;
         
         return new Account($values);
