@@ -32,8 +32,7 @@ class RoboWhoisTest extends TestCase
         $domain                 = "robowhois.com";
         $index                  = $this->getWebService()->whois($domain);
 
-        $this->assertEquals($this->stripSpecials($index->getContent()), $this->stripSpecials(StubClient::getContent($domain)));
-        $this->assertInstanceOf('RoboWhois\Whois\Index', $index);
+        $this->assertEquals($this->stripSpecials($index), $this->stripSpecials(StubClient::getContent($domain)));
     }
 
     public function testAccountInformation()

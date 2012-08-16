@@ -21,11 +21,27 @@
 
 namespace RoboWhois;
 
+use Symfony\Component\HttpFoundation\Response;
+
 class Exception extends \Exception
 {
-    public function __construct($message)
+    protected $response;
+    
+    public function __construct($message, $response = null)
     {
-        $this->message = $message;
+        $this->message   = $message;
+        $this->response  = $response;
+    }
+    
+    /**
+     * If an exception has been raise because of a bad request has been sent to
+     * the RoboWhois API you can access the API response from here.
+     *
+     * @return Symfony\Component\HttpFoundation\Response|null
+     */
+    public function getResponse()
+    {
+        return $this->response;
     }
 }
 

@@ -21,8 +21,8 @@
 namespace RoboWhois;
 
 use RoboWhois\Contract\Http\Client;
-use RoboWhois\Whois\Index;
 use RoboWhois\Account;
+use RoboWhois\Whois\Availability;
 use RoboWhois\Whois\Record;
 use RoboWhois\Whois\Parts;
 use RoboWhois\Whois\Properties;
@@ -69,6 +69,11 @@ class RoboWhois
     {
         $response         = $this->callApi(null, 'ACCOUNT');
         $values           = json_decode($response->getContent(), true);
+        
+        if (!is_array($values)) {
+            throw new Exception(self::API_RESPONSE_ERROR);
+        }
+        
         $values           = isset($values['account']) ? $values['account'] : null;
         
         return new Account($values);
@@ -115,7 +120,7 @@ class RoboWhois
           throw new Exception(self::API_RESPONSE_ERROR);
         }
         
-        return $resultArray['response'];
+        return new Availability($resultArray['response']);
     }
     
     /**
@@ -129,7 +134,7 @@ class RoboWhois
     {        
         $content = $this->callApi($domain, 'INDEX')->getContent();
         
-        return new Index(array('content' => $content));
+        return $content;
     }
     
     /**
@@ -286,7 +291,7 @@ class RoboWhois
                 $response->getContent()
         );
 
-        throw new Exception($message);
+        throw new Exception($message, $response);
     }
 }
 
