@@ -24,7 +24,6 @@
     "require": {
         "php": ">=5.3.2",
         "kriswallsmith/Buzz": "v0.5",
-        "symfony/http-foundation": "v2.0.12",
-        "doctrine/common": "v2.2.2"
+        "symfony/http-foundation": "v2.0.12"
     }
 }

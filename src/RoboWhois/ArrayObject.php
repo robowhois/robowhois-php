@@ -43,7 +43,7 @@ class ArrayObject implements \ArrayAccess
      */
     public function __call($name, $arguments)
     {
-        $offset = Inflector::tableize(substr($name, 3));
+        $offset = strtolower(preg_replace('~(?<=\\w)([A-Z])~', '_$1', substr($name, 3)));
         
         if (isset($this[$offset])) {
             $data = $this[$offset];
