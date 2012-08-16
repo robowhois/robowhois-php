@@ -1,7 +1,7 @@
 {
-    "name": "robowhois/Robowhois",
+    "name": "robowhois/RoboWhois",
     "type": "library",
-    "description": "PHP SDK for Robowhois APIs.",
+    "description": "PHP SDK for RoboWhois APIs.",
     "keywords": ["robowhois"],
     "license": "MIT",
     "authors": [
@@ -18,7 +18,7 @@
     ],
     "autoload": {
         "psr-0": {
-            "Robowhois": "src/"
+            "RoboWhois": "src/"
         }
     },
     "require": {

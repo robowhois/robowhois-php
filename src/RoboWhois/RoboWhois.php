@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Robowhois package.
+ * This file is part of the RoboWhois package.
  *
  * (c) Alessandro Nadalin <alessandro.nadalin@gmail.com>
  * (c) David Funaro <ing.davidino@gmail.com>
@@ -11,28 +11,28 @@
  */
 
 /**
- * Class Robowhois
+ * Class RoboWhois
  *
- * @package     Robowhois
+ * @package     RoboWhois
  * @author      Alessandro Nadalin <alessandro.nadalin@gmail.com>
  * @author      David Funaro <ing.davidino@gmail.com>
  */
 
-namespace Robowhois;
+namespace RoboWhois;
 
-use Robowhois\Contract\Http\Client;
-use Robowhois\Whois\Index;
-use Robowhois\Account;
-use Robowhois\Whois\Record;
-use Robowhois\Whois\Parts;
-use Robowhois\Whois\Properties;
-use Robowhois\Http\Client as HttpClient;
+use RoboWhois\Contract\Http\Client;
+use RoboWhois\Whois\Index;
+use RoboWhois\Account;
+use RoboWhois\Whois\Record;
+use RoboWhois\Whois\Parts;
+use RoboWhois\Whois\Properties;
+use RoboWhois\Http\Client as HttpClient;
 use Buzz\Browser;
 use Symfony\Component\HttpFoundation\Response;
-use Robowhois\Exception;
-use Robowhois\Exception\Http\Response\VoidResponse;
+use RoboWhois\Exception;
+use RoboWhois\Exception\Http\Response\VoidResponse;
 
-class Robowhois
+class RoboWhois
 {
     private $apiKey;
     private $client;
@@ -44,15 +44,15 @@ class Robowhois
     const API_AVAILABILITY_ENDPOINT  = "/whois/:domain/availability";
     const API_ACCOUNT_ENDPOINT       = "/account";
     const API_RECORD_ENDPOINT        = "/whois/:domain/record";
-    const API_RESPONSE_ERROR         = "There was an error while processing your request: Robowhois API sent a malformed response";
+    const API_RESPONSE_ERROR         = "There was an error while processing your request: RoboWhois API sent a malformed response";
     
     
     /**
-     * Instantiates a new Robowhois object with the given $apiKey
+     * Instantiates a new RoboWhois object with the given $apiKey
      * and an internal http $client.
      * 
      * @param string                         $apiKey
-     * @param Robowhois\Contract\Http\Client $client
+     * @param RoboWhois\Contract\Http\Client $client
      */
     public function __construct($apiKey, Client $client = null)
     {
@@ -63,7 +63,7 @@ class Robowhois
     /**
      * Retrieves the information about account
      * 
-     * @return Robowhois\Whois\Account
+     * @return RoboWhois\Whois\Account
      */
     public function account()
     {
@@ -123,7 +123,7 @@ class Robowhois
      * 
      * @param string $domain
      * 
-     * @return Robowhois\Whois\Index
+     * @return RoboWhois\Whois\Index
      */
     public function whois($domain)
     {        
@@ -136,7 +136,7 @@ class Robowhois
      * Returns the parts of the given $domain.
      *
      * @param   string $domain
-     * @return  Robowhois\Whois\Parts
+     * @return  RoboWhois\Whois\Parts
      */
     public function whoisParts($domain)
     {
@@ -153,7 +153,7 @@ class Robowhois
      * Returns the properties of the given $domain.
      *
      * @param   string $domain
-     * @return  Robowhois\Index\Properties 
+     * @return  RoboWhois\Index\Properties 
      */
     public function whoisProperties($domain)
     {
@@ -171,7 +171,7 @@ class Robowhois
      * 
      * @param string $domain
      * 
-     * @return Robowhois\Whois\Index
+     * @return RoboWhois\Whois\Index
      */
     public function whoisRecord($domain)
     {        
@@ -209,7 +209,7 @@ class Robowhois
      * @param   string $content
      * @param   string $uri 
      * @return  null
-     * @throws  Robowhois\Exception
+     * @throws  RoboWhois\Exception
      */
     protected function checkResponseContent($content = null, $uri) {
         if (empty($content)) {
@@ -232,7 +232,7 @@ class Robowhois
     }
     
     /**
-     * Returns the API key associated with this Robowhois instance.
+     * Returns the API key associated with this RoboWhois instance.
      *
      * @return string
      */
@@ -242,9 +242,9 @@ class Robowhois
     }
 
     /**
-     * Returns the client associated associated with thisRobowhois instance.
+     * Returns the client associated associated with thisRoboWhois instance.
      *
-     * @return Robowhois\Contract\Http\Client 
+     * @return RoboWhois\Contract\Http\Client 
      */
     protected function getClient()
     {
@@ -256,7 +256,7 @@ class Robowhois
      *
      * @param   string $uri
      * @return  Symfony\Component\HttpFoundation\Response
-     * @throws  Robowhois\Exception\Http\Response
+     * @throws  RoboWhois\Exception\Http\Response
      */
     protected function retrieveResponse($uri)
     {
@@ -276,7 +276,7 @@ class Robowhois
      * Throws a generic API error due to an invalid HTTP response.
      *
      * @param   Response $response 
-     * @throws  Robowhois\Exception
+     * @throws  RoboWhois\Exception
      */
     protected function throwApiError(Response $response)
     {                

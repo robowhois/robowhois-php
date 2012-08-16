@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Robowhois package.
+ * This file is part of the RoboWhois package.
  *
  * (c) Alessandro Nadalin <alessandro.nadalin@gmail.com>
  * (c) David Funaro <ing.davidino@gmail.com>
@@ -11,9 +11,9 @@
  */
 
 /**
- * Class RobowhoisTest
+ * Class RoboWhoisTest
  *
- * @package     Robowhois
+ * @package     RoboWhois
  * @subpackage  Test
  * @author      Alessandro Nadalin <alessandro.nadalin@gmail.com>
  * @author      David Funaro <ing.davidino@gmail.com>
@@ -21,8 +21,8 @@
 
 namespace test;
 
-use Robowhois\Robowhois;
-use Robowhois\Http\Client;
+use RoboWhois\RoboWhois;
+use RoboWhois\Http\Client;
 use Stub\Http\Client as StubClient;
 use Buzz\Browser;
 
@@ -37,7 +37,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
     
     protected function getWebService()
     {
-        return new Robowhois($this->getApiKey());
+        return new RoboWhois($this->getApiKey());
     }
 }
 

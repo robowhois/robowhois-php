@@ -1,6 +1,6 @@
 <?php
 /*
- * This file is part of the Robowhois package.
+ * This file is part of the RoboWhois package.
  *
  * (c) Alessandro Nadalin <alessandro.nadalin@gmail.com>
  *
@@ -11,14 +11,14 @@
 /**
  * Class Client
  *
- * @package     Robowhois
+ * @package     RoboWhois
  * @author      Alessandro Nadalin <alessandro.nadalin@gmail.com>
  * @author      David Funaro <ing.davidino@gmail.com>
  */
 
 namespace Stub\Http;
 
-use Robowhois\Contract\Http\Client as ClientInterface;
+use RoboWhois\Contract\Http\Client as ClientInterface;
 use \Symfony\Component\HttpFoundation\Response;
 
 class Client implements ClientInterface

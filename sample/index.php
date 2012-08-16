@@ -1,11 +1,11 @@
 <?php
 
-use Robowhois\Robowhois;
-use Robowhois\Exception;
+use RoboWhois\RoboWhois;
+use RoboWhois\Exception;
 
 require 'vendor/.composer/autoload.php';
 
-$robowhois = new Robowhois('INSERT-YOUR-API-KEY-HERE');
+$robowhois = new RoboWhois('INSERT-YOUR-API-KEY-HERE');
 
 try {
     echo $robowhois->whois('robowhois.com')->getContent();

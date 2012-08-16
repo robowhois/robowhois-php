@@ -19,7 +19,7 @@
  * @author      David Funaro <ing.davidino@gmail.com>
  */
 
-namespace Robowhois;
+namespace RoboWhois;
 
 use Doctrine\Common\Util\Inflector;
 

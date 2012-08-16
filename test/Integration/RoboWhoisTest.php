@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Robowhois package.
+ * This file is part of the RoboWhois package.
  *
  * (c) Alessandro Nadalin <alessandro.nadalin@gmail.com>
  * (c) David Funaro <ing.davidino@gmail.com>
@@ -11,9 +11,9 @@
  */
 
 /**
- * Class RobowhoisTest
+ * Class RoboWhoisTest
  *
- * @package     Robowhois
+ * @package     RoboWhois
  * @subpackage  Test
  * @author      Alessandro Nadalin <alessandro.nadalin@gmail.com>
  * @author      David Funaro <ing.davidino@gmail.com>
@@ -22,47 +22,47 @@
 namespace test\Integration;
 
 use test\TestCase;
-use Robowhois\Robowhois;
+use RoboWhois\RoboWhois;
 use Stub\Http\Client as StubClient;
 
-class RobowhoisTest extends TestCase
+class RoboWhoisTest extends TestCase
 {
-    public function testIndexOfRobowhoisdotcom()
+    public function testIndexOfRoboWhoisdotcom()
     {        
         $domain                 = "robowhois.com";
         $index                  = $this->getWebService()->whois($domain);
 
         $this->assertEquals($this->stripSpecials($index->getContent()), $this->stripSpecials(StubClient::getContent($domain)));
-        $this->assertInstanceOf('Robowhois\Whois\Index', $index);
+        $this->assertInstanceOf('RoboWhois\Whois\Index', $index);
     }
 
     public function testAccountInformation()
     {
         $account = $this->getWebService()->account();  
-        $this->assertInstanceOf('Robowhois\Account', $account);
+        $this->assertInstanceOf('RoboWhois\Account', $account);
     }
 
     /**
-     * @expectedException Robowhois\Exception
+     * @expectedException RoboWhois\Exception
      */
     public function testIndexOfANonExistingDomain()
     {        
         $domain                 = "robowhois.com" . 123467;
         $index                  = $this->getWebService()->whois($domain);
 
-        $this->assertInstanceOf('Robowhois\Whois\Index', $index);
+        $this->assertInstanceOf('RoboWhois\Whois\Index', $index);
     }
     
     /**
-     * @expectedException Robowhois\Exception
+     * @expectedException RoboWhois\Exception
      */
     public function testExecutingUnauthenticatedRequests()
     {        
         $domain                 = "robowhois.com";
-        $robowhois              = new Robowhois("...");
+        $robowhois              = new RoboWhois("...");
         $index                  = $robowhois->whois($domain);
         $this->assertEquals($this->stripSpecials($index->getContent()), $this->stripSpecials(StubClient::getContent($domain)));
-        $this->assertInstanceOf('Robowhois\Whois\Index', $index);
+        $this->assertInstanceOf('RoboWhois\Whois\Index', $index);
     }
     
     public function testDomainAvailability()
@@ -83,21 +83,21 @@ class RobowhoisTest extends TestCase
     {
         $record = $this->getWebService()->whoisRecord('robowhois.com');
 
-        $this->assertInstanceOf('Robowhois\Whois\Record', $record);
+        $this->assertInstanceOf('RoboWhois\Whois\Record', $record);
     }
     
     public function testParts()
     {
         $record = $this->getWebService()->whoisParts('robowhois.com');
 
-        $this->assertInstanceOf('Robowhois\Whois\Parts', $record);
+        $this->assertInstanceOf('RoboWhois\Whois\Parts', $record);
     }
     
     public function testProperties()
     {
         $record = $this->getWebService()->whoisProperties('robowhois.com');
 
-        $this->assertInstanceOf('Robowhois\Whois\Properties', $record);
+        $this->assertInstanceOf('RoboWhois\Whois\Properties', $record);
     }
 
     protected function stripSpecials($content)

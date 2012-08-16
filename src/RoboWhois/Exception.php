@@ -1,30 +1,31 @@
 <?php
 
 /*
- * This file is part of the Robowhois package.
+ * This file is part of the RoboWhois package.
  *
  * (c) Alessandro Nadalin <alessandro.nadalin@gmail.com>
+ * (c) David Funaro <ing.davidino@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
 /**
- * Class Index
+ * Class Http
  *
- * @package     Robowhois
+ * @package     RoboWhois
+ * @subpackage  Exception
  * @author      Alessandro Nadalin <alessandro.nadalin@gmail.com>
  * @author      David Funaro <ing.davidino@gmail.com>
  */
 
-namespace Robowhois\Whois;
+namespace RoboWhois;
 
-use Robowhois\ArrayObject;
-
-class Index extends ArrayObject
-{    
-    public function __toString()
+class Exception extends \Exception
+{
+    public function __construct($message)
     {
-        return $this->getContent();
+        $this->message = $message;
     }
 }
+

@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Robowhois package.
+ * This file is part of the RoboWhois package.
  *
  * (c) Alessandro Nadalin <alessandro.nadalin@gmail.com>
  * (c) David Funaro <ing.davidino@gmail.com>
@@ -13,15 +13,15 @@
 /**
  * Class Client
  *
- * @package     Robowhois
+ * @package     RoboWhois
  * @subpackage  Http
  * @author      Alessandro Nadalin <alessandro.nadalin@gmail.com>
  * @author      David Funaro <ing.davidino@gmail.com>
  */
 
-namespace Robowhois\Http;
+namespace RoboWhois\Http;
 
-use Robowhois\Contract\Http\Client as HttpClient;
+use RoboWhois\Contract\Http\Client as HttpClient;
 use Buzz\Browser;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -31,7 +31,7 @@ class Client implements HttpClient
     protected $apiKey;
 
     /**
-    * Creates a new instance of an HTTP client customized for Robowhois APIs.
+    * Creates a new instance of an HTTP client customized for RoboWhois APIs.
     *
     * @param Browser $adapter  The HTTP adapter used to make HTTP requests
     */
@@ -69,7 +69,7 @@ class Client implements HttpClient
     }
   
     /**
-    * Configures the adapter for authentication against the Robowhois API. 
+    * Configures the adapter for authentication against the RoboWhois API. 
     */
     protected function getDefaultAdapter()
     {

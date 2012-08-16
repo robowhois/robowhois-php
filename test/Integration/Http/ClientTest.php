@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Robowhois package.
+ * This file is part of the RoboWhois package.
  *
  * (c) Alessandro Nadalin <alessandro.nadalin@gmail.com>
  * (c) Alessandro Nadalin <alessandro.nadalin@gmail.com>
@@ -13,7 +13,7 @@
 /**
  * Class ClientTest
  *
- * @package     Robowhois
+ * @package     RoboWhois
  * @subpackage  Test
  * @author      Alessandro Nadalin <alessandro.nadalin@gmail.com>
  * @author      David Funaro <ing.davidino@gmail.com>
@@ -21,7 +21,7 @@
 
 namespace test\Integration;
 
-use Robowhois\Http\Client;
+use RoboWhois\Http\Client;
 use Buzz\Browser;
 use test\TestCase;
 

@@ -23,8 +23,8 @@
       <testsuite name="http">
           <directory >test/Http</directory>
       </testsuite>
-      <testsuite name="Robowhois">
-          <file>test/RobowhoisTest.php</file>
+      <testsuite name="RoboWhois">
+          <file>test/RoboWhoisTest.php</file>
       </testsuite>
     </testsuites>
 

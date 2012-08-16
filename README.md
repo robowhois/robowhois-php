@@ -1,4 +1,4 @@
-# PHP client for Robowhois APIs
+# PHP client for RoboWhois APIs
 
 ## Installation
 
@@ -18,7 +18,7 @@ and install the needed packages
 
     php composer.phar install
 
-then you can use Robowhois in your code: bare in mind that the autoloading follows the
+then you can use RoboWhois in your code: bare in mind that the autoloading follows the
 [PSR-0](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md)
 standard: there is an auto-generated autoloader that you can use:
 
@@ -27,7 +27,7 @@ standard: there is an auto-generated autoloader that you can use:
 ## A brief note on the docs
 
 We try to provide an efficient way to document the features of this client, but
-bare in mind that, given Robowhois API can change, this doc may be updated
+bare in mind that, given RoboWhois API can change, this doc may be updated
 (last revision: 04/16/2012): we strongly recommend to take a look at the
 [tests](https://github.com/robowhois/robowhois-php/tree/master/test)
 provided by this library as they are the simplest way to get in touch with
@@ -35,7 +35,7 @@ the working code.
 
 ## Objects as array
 
-Robowhois objects extend the class `Robowhois\ArrayObject`, used to provide
+RoboWhois objects extend the class `RoboWhois\ArrayObject`, used to provide
 a set of convenient methods for accessing data returned by the API.
 
 Thanks to this class you are able to access objects' properties as arrays'
@@ -43,7 +43,7 @@ ones:
 
     $account = $robowhois->account();
 
-    // $account is an instance of Robowhois\Account
+    // $account is an instance of RoboWhois\Account
     echo $account['credits_remaining'];
 
 and you can also rely on magic methods to convert those indexes in getters:
@@ -53,16 +53,16 @@ and you can also rely on magic methods to convert those indexes in getters:
 ## Consuming the account API
 
 The *account* API is supposed to return informations about the account which is
-making requests to the Robowhois webservice:
+making requests to the RoboWhois webservice:
 
     <?php
 
-    use Robowhois\Robowhois;
-    use Robowhois\Exception;
+    use RoboWhois\RoboWhois;
+    use RoboWhois\Exception;
 
     require 'vendor/.composer/autoload.php';
 
-    $robowhois = new Robowhois('INSERT-YOUR-API-KEY-HERE');
+    $robowhois = new RoboWhois('INSERT-YOUR-API-KEY-HERE');
 
     try {
         $account =  $robowhois->account();
@@ -72,7 +72,7 @@ making requests to the Robowhois webservice:
         echo "The following error occurred: " . $e->getMessage();
     }
 
-Take a look at the `Robowhois\Account` class to understand which attributes
+Take a look at the `RoboWhois\Account` class to understand which attributes
 are available from the API.
 
 You can take a look at the `sample/account.php` script provided inside this
@@ -86,12 +86,12 @@ The *index* API is supposed to return raw text/plain WHOIS records:
 
     <?php
 
-    use Robowhois\Robowhois;
-    use Robowhois\Exception;
+    use RoboWhois\RoboWhois;
+    use RoboWhois\Exception;
 
     require 'vendor/.composer/autoload.php';
 
-    $robowhois = new Robowhois('INSERT-YOUR-API-KEY-HERE');
+    $robowhois = new RoboWhois('INSERT-YOUR-API-KEY-HERE');
 
     try {
         echo $robowhois->whoisIndex('robowhois.com')->getContent();
@@ -110,12 +110,12 @@ The *record* API is supposed to return a JSON representation of the *index* one:
 
     <?php
 
-    use Robowhois\Robowhois;
-    use Robowhois\Exception;
+    use RoboWhois\RoboWhois;
+    use RoboWhois\Exception;
 
     require 'vendor/.composer/autoload.php';
 
-    $robowhois = new Robowhois('INSERT-YOUR-API-KEY-HERE');
+    $robowhois = new RoboWhois('INSERT-YOUR-API-KEY-HERE');
 
     try {
         echo $robowhois->whoisRecord('robowhois.com')->getRecord();
@@ -139,12 +139,12 @@ domain:
 
     <?php
 
-    use Robowhois\Robowhois;
-    use Robowhois\Exception;
+    use RoboWhois\RoboWhois;
+    use RoboWhois\Exception;
 
     require 'vendor/.composer/autoload.php';
 
-    $robowhois = new Robowhois('INSERT-YOUR-API-KEY-HERE');
+    $robowhois = new RoboWhois('INSERT-YOUR-API-KEY-HERE');
 
     try {
         $domain = $robowhois->whoisProperties('robowhois.com');
@@ -166,12 +166,12 @@ merging the one or more responses returned by the contacted WHOIS server(s):
 
     <?php
 
-    use Robowhois\Robowhois;
-    use Robowhois\Exception;
+    use RoboWhois\RoboWhois;
+    use RoboWhois\Exception;
 
     require 'vendor/.composer/autoload.php';
 
-    $robowhois = new Robowhois('INSERT-YOUR-API-KEY-HERE');
+    $robowhois = new RoboWhois('INSERT-YOUR-API-KEY-HERE');
 
     try {
         $domain = $robowhois->whoisParts('robowhois.com');
@@ -193,12 +193,12 @@ a particular domain:
 
     <?php
 
-    use Robowhois\Robowhois;
-    use Robowhois\Exception;
+    use RoboWhois\RoboWhois;
+    use RoboWhois\Exception;
 
     require 'vendor/.composer/autoload.php';
 
-    $robowhois = new Robowhois('INSERT-YOUR-API-KEY-HERE');
+    $robowhois = new RoboWhois('INSERT-YOUR-API-KEY-HERE');
 
     try {
         $domains = array(
@@ -242,7 +242,7 @@ root, by doing:
 
 Some tests require internet connection (to test against a real API response),
 so they are disabled by default; to run them add a `.token` file under the `test`
-directory containing your Robowhois API key and run
+directory containing your RoboWhois API key and run
 
     phpunit test/
 

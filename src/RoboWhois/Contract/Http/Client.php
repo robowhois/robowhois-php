@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Robowhois package.
+ * This file is part of the RoboWhois package.
  *
  * (c) Alessandro Nadalin <alessandro.nadalin@gmail.com>
  * (c) Alessandro Nadalin <alessandro.nadalin@gmail.com>
@@ -13,12 +13,12 @@
 /**
  * Class Client
  *
- * @package     Robowhois
+ * @package     RoboWhois
  * @subpackage  Http
  * @author      Alessandro Nadalin <alessandro.nadalin@gmail.com>
  */
 
-namespace Robowhois\Contract\Http;
+namespace RoboWhois\Contract\Http;
 
 interface Client
 {

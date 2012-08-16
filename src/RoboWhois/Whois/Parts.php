@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Robowhois package.
+ * This file is part of the RoboWhois package.
  *
  * (c) Alessandro Nadalin <alessandro.nadalin@gmail.com>
  * (c) David Funaro <ing.davidino@gmail.com>
@@ -11,21 +11,19 @@
  */
 
 /**
- * Class Http
+ * Class Parts
  *
- * @package     Robowhois
- * @subpackage  Exception
+ * @package     RoboWhois
+ * @subpackage  Whois
  * @author      Alessandro Nadalin <alessandro.nadalin@gmail.com>
  * @author      David Funaro <ing.davidino@gmail.com>
  */
 
-namespace Robowhois;
+namespace RoboWhois\Whois;
 
-class Exception extends \Exception
+use RoboWhois\ArrayObject;
+
+class Parts extends ArrayObject
 {
-    public function __construct($message)
-    {
-        $this->message = $message;
-    }
 }
 
