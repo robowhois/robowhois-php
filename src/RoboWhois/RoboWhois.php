@@ -291,7 +291,7 @@ class RoboWhois
                 $response->getContent()
         );
 
-        throw new Exception($message);
+        throw new Exception($message, $response);
     }
 }
 
