@@ -22,6 +22,7 @@ namespace RoboWhois;
 
 use RoboWhois\Contract\Http\Client;
 use RoboWhois\Account;
+use RoboWhois\Whois\Availability;
 use RoboWhois\Whois\Record;
 use RoboWhois\Whois\Parts;
 use RoboWhois\Whois\Properties;
@@ -119,7 +120,7 @@ class RoboWhois
           throw new Exception(self::API_RESPONSE_ERROR);
         }
         
-        return $resultArray['response'];
+        return new Availability($resultArray['response']);
     }
     
     /**
