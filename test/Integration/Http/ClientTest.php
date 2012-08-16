@@ -29,7 +29,7 @@ class ClientTest extends TestCase
 {
     public function testRetrievingANonAuthenticatedResponse()
     {
-      $client   = new Client(new Browser());
+      $client   = new Client(new Browser(new \Buzz\Client\Curl));
       $response = $client->get("http://api.robowhois.com/account");
 
       $this->assertInstanceOf("\Symfony\Component\HttpFoundation\Response", $response);
@@ -38,7 +38,7 @@ class ClientTest extends TestCase
 
     public function testRetrievingAnAuthenticatedResponseForTheAccountAPI()
     {
-      $client   = new Client(new Browser());
+      $client   = new Client(new Browser(new \Buzz\Client\Curl));
 
       $client->authenticate($this->getApiKey());
       $response = $client->get("http://api.robowhois.com/account");

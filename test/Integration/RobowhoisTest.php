@@ -32,7 +32,7 @@ class RobowhoisTest extends TestCase
         $domain                 = "robowhois.com";
         $index                  = $this->getWebService()->whois($domain);
 
-        $this->assertEquals($this->stripSpecials($index->getContent()),  $this->stripSpecials(StubClient::getContent($domain)));
+        $this->assertEquals($this->stripSpecials($index->getContent()), $this->stripSpecials(StubClient::getContent($domain)));
         $this->assertInstanceOf('Robowhois\Whois\Index', $index);
     }
 
@@ -67,7 +67,7 @@ class RobowhoisTest extends TestCase
     
     public function testDomainAvailability()
     {
-        $availability = $this->getWebService()->domainAvailability('robowhois.com');
+        $availability = $this->getWebService()->whoisAvailability('robowhois.com');
         
         $this->assertFalse($availability['available']);
         $this->assertTrue($availability['registered']);

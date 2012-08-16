@@ -82,7 +82,7 @@ class Robowhois
      */
     public function isAvailable($domain)
     {
-        $availability = $this->domainAvailability($domain);
+        $availability = $this->whoisAvailability($domain);
       
         return $availability['available'];
     }

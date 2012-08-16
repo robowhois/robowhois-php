@@ -131,13 +131,13 @@ class RobowhoisTest extends TestCase
     public function testDomainAvailabilityWithAMalformedResponse()
     {
         $robowhois  = new Robowhois("aaa", new Client);
-        $availability = $robowhois->domainAvailability('availablebutmalformed.com'); 
+        $robowhois->whoisAvailability('availablebutmalformed.com'); 
     }
     
     public function testADomainIsAvailable()
     {
         $robowhois  = new Robowhois("aaa", new Client);
-        $availability = $robowhois->domainAvailability('available.com'); 
+        $availability = $robowhois->whoisAvailability('available.com'); 
         
         $this->assertTrue($availability['available']);
         $this->assertFalse($availability['registered']);
