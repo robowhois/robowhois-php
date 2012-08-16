@@ -21,7 +21,6 @@
 namespace RoboWhois;
 
 use RoboWhois\Contract\Http\Client;
-use RoboWhois\Whois\Index;
 use RoboWhois\Account;
 use RoboWhois\Whois\Record;
 use RoboWhois\Whois\Parts;
@@ -129,7 +128,7 @@ class RoboWhois
     {        
         $content = $this->callApi($domain, 'INDEX')->getContent();
         
-        return new Index(array('content' => $content));
+        return $content;
     }
     
     /**

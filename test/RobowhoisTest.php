@@ -33,8 +33,7 @@ class RoboWhoisTest extends TestCase
         $index          = $robowhois->whois($domain);        
         $fileContents   = Client::getContent($domain);
         
-        $this->assertEquals($fileContents, $index['content']);
-        $this->assertInstanceOf('RoboWhois\Whois\Index', $index);
+        $this->assertEquals($fileContents, $index);
     }
     
     public function testWhoisRecord()
