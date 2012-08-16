@@ -28,7 +28,7 @@ standard: there is an auto-generated autoloader that you can use:
 
 We try to provide an efficient way to document the features of this client, but
 bare in mind that, given RoboWhois API can change, this doc may be updated
-(last revision: 04/16/2012): we strongly recommend to take a look at the
+(last revision: 08/16/2012): we strongly recommend to take a look at the
 [tests](https://github.com/robowhois/robowhois-php/tree/master/test)
 provided by this library as they are the simplest way to get in touch with
 the working code.
