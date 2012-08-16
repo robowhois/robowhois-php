@@ -35,9 +35,9 @@ class Client implements HttpClient
     *
     * @param Browser $adapter  The HTTP adapter used to make HTTP requests
     */
-    public function __construct(Browser $adapter = null)
+    public function __construct()
     {
-        $this->adapter  = $adapter ?: $this->getDefaultAdapter();
+        $this->adapter = $this->getDefaultAdapter();
     }
     
     /**
