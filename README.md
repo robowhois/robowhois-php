@@ -22,7 +22,7 @@ then you can use RoboWhois in your code: bare in mind that the autoloading follo
 [PSR-0](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md)
 standard: there is an auto-generated autoloader that you can use:
 
-    require 'vendor/.composer/autoload.php';
+    require 'vendor/autoload.php';
 
 ## A brief note on the docs
 
@@ -60,7 +60,7 @@ making requests to the RoboWhois webservice:
     use RoboWhois\RoboWhois;
     use RoboWhois\Exception;
 
-    require 'vendor/.composer/autoload.php';
+    require 'vendor/autoload.php';
 
     $robowhois = new RoboWhois('INSERT-YOUR-API-KEY-HERE');
 
@@ -89,12 +89,12 @@ The *index* API is supposed to return raw text/plain WHOIS records:
     use RoboWhois\RoboWhois;
     use RoboWhois\Exception;
 
-    require 'vendor/.composer/autoload.php';
+    require 'vendor/autoload.php';
 
     $robowhois = new RoboWhois('INSERT-YOUR-API-KEY-HERE');
 
     try {
-        echo $robowhois->whoisIndex('robowhois.com')->getContent();
+        echo $robowhois->whois('robowhois.com');
     } catch (Exception $e) {
         echo "The following error occurred: " . $e->getMessage();
     }
@@ -113,19 +113,18 @@ The *record* API is supposed to return a JSON representation of the *index* one:
     use RoboWhois\RoboWhois;
     use RoboWhois\Exception;
 
-    require 'vendor/.composer/autoload.php';
+    require 'vendor/autoload.php';
 
     $robowhois = new RoboWhois('INSERT-YOUR-API-KEY-HERE');
 
     try {
-        echo $robowhois->whoisRecord('robowhois.com')->getRecord();
-        echo $robowhois->whoisRecord('robowhois.com')->getDaystamp();
+        $whois = $robowhois->whoisRecord('robowhois.com');
+
+        echo $whois['daystamp'] . "\n";
+        echo $whois->getRecord();
     } catch (Exception $e) {
         echo "The following error occurred: " . $e->getMessage();
     }
-
-Using `IndexAPI::getContent()` and `RecordAPI::getRecord()` should be the same
-thing.
 
 You can take a look at the `sample/record.php` script provided inside this
 repository, or run it
@@ -142,13 +141,13 @@ domain:
     use RoboWhois\RoboWhois;
     use RoboWhois\Exception;
 
-    require 'vendor/.composer/autoload.php';
+    require 'vendor/autoload.php';
 
     $robowhois = new RoboWhois('INSERT-YOUR-API-KEY-HERE');
 
     try {
         $domain = $robowhois->whoisProperties('robowhois.com');
-    
+
         echo $domain['properties']['created_on'] . "\n";
     } catch (Exception $e) {
         echo "The following error occurred: " . $e->getMessage();
@@ -169,22 +168,22 @@ merging the one or more responses returned by the contacted WHOIS server(s):
     use RoboWhois\RoboWhois;
     use RoboWhois\Exception;
 
-    require 'vendor/.composer/autoload.php';
+    require 'vendor/autoload.php';
 
     $robowhois = new RoboWhois('INSERT-YOUR-API-KEY-HERE');
 
     try {
         $domain = $robowhois->whoisParts('robowhois.com');
-    
+
         echo $domain['parts'][0]['body'] . "\n";
     } catch (Exception $e) {
         echo "The following error occurred: " . $e->getMessage();
     }
 
-You can take a look at the `sample/properties.php` script provided inside this
+You can take a look at the `sample/parts.php` script provided inside this
 repository, or run it
 
-    php sample/properties.php
+    php sample/parts.php
 
 ## Consuming the availability API
 
@@ -196,13 +195,13 @@ a particular domain:
     use RoboWhois\RoboWhois;
     use RoboWhois\Exception;
 
-    require 'vendor/.composer/autoload.php';
+    require 'vendor/autoload.php';
 
     $robowhois = new RoboWhois('INSERT-YOUR-API-KEY-HERE');
 
     try {
         $domains = array(
-        'google.com', 'mycustomabsurddomainnamenooneeverregistered.ch'
+          'google.com', 'mycustomabsurddomainnamenooneeverregistered.ch'
         );
 
         foreach ($domains as $domain) {
@@ -212,14 +211,14 @@ a particular domain:
                 echo sprintf("%s is available!", $domain) . "\n";
             } else {
                 echo sprintf("%s is registered!", $domain) . "\n";
-            } 
+            }
         }
     } catch (Exception $e) {
         echo "The following error occurred: " . $e->getMessage();
     }
 
 There are a couple convenient methods to quickly check a domain's availability:
-you can use `$robowhois->isAvailable($domain)` and
+you can use `$robowhois->whoisAvailability($domain)` and
 `$robowhois->isRegistered($domain)`.
 
 You can take a look at the `sample/availability.php` script provided inside this
