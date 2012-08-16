@@ -3,7 +3,7 @@
 use RoboWhois\RoboWhois;
 use RoboWhois\Exception;
 
-require 'vendor/.composer/autoload.php';
+require 'vendor/autoload.php';
 
 $robowhois = new RoboWhois('INSERT-YOUR-API-KEY-HERE');
 
