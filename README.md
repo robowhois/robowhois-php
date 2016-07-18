@@ -55,22 +55,24 @@ and you can also rely on magic methods to convert those indexes in getters:
 The *account* API is supposed to return informations about the account which is
 making requests to the RoboWhois webservice:
 
-    <?php
+``` php
+<?php
 
-    use RoboWhois\RoboWhois;
-    use RoboWhois\Exception;
+use RoboWhois\RoboWhois;
+use RoboWhois\Exception;
 
-    require 'vendor/autoload.php';
+require 'vendor/autoload.php';
 
-    $robowhois = new RoboWhois('INSERT-YOUR-API-KEY-HERE');
+$robowhois = new RoboWhois('INSERT-YOUR-API-KEY-HERE');
 
-    try {
-        $account =  $robowhois->account();
+try {
+    $account =  $robowhois->account();
 
-        echo $account->getCreditsRemaining();
-    } catch (Exception $e) {
-        echo "The following error occurred: " . $e->getMessage();
-    }
+    echo $account->getCreditsRemaining();
+} catch (Exception $e) {
+    echo "The following error occurred: " . $e->getMessage();
+}
+```
 
 Take a look at the `RoboWhois\Account` class to understand which attributes
 are available from the API.
@@ -84,20 +86,22 @@ repository, or run it
 
 The *index* API is supposed to return raw text/plain WHOIS records:
 
-    <?php
+``` php
+<?php
 
-    use RoboWhois\RoboWhois;
-    use RoboWhois\Exception;
+use RoboWhois\RoboWhois;
+use RoboWhois\Exception;
 
-    require 'vendor/autoload.php';
+require 'vendor/autoload.php';
 
-    $robowhois = new RoboWhois('INSERT-YOUR-API-KEY-HERE');
+$robowhois = new RoboWhois('INSERT-YOUR-API-KEY-HERE');
 
-    try {
-        echo $robowhois->whois('robowhois.com');
-    } catch (Exception $e) {
-        echo "The following error occurred: " . $e->getMessage();
-    }
+try {
+    echo $robowhois->whois('robowhois.com');
+} catch (Exception $e) {
+    echo "The following error occurred: " . $e->getMessage();
+}
+```
 
 You can take a look at the `sample/index.php` script provided inside this
 repository, or run it
@@ -108,23 +112,25 @@ repository, or run it
 
 The *record* API is supposed to return a JSON representation of the *index* one:
 
-    <?php
+``` php
+<?php
 
-    use RoboWhois\RoboWhois;
-    use RoboWhois\Exception;
+use RoboWhois\RoboWhois;
+use RoboWhois\Exception;
 
-    require 'vendor/autoload.php';
+require 'vendor/autoload.php';
 
-    $robowhois = new RoboWhois('INSERT-YOUR-API-KEY-HERE');
+$robowhois = new RoboWhois('INSERT-YOUR-API-KEY-HERE');
 
-    try {
-        $whois = $robowhois->whoisRecord('robowhois.com');
+try {
+    $whois = $robowhois->whoisRecord('robowhois.com');
 
-        echo $whois['daystamp'] . "\n";
-        echo $whois->getRecord();
-    } catch (Exception $e) {
-        echo "The following error occurred: " . $e->getMessage();
-    }
+    echo $whois['daystamp'] . "\n";
+    echo $whois->getRecord();
+} catch (Exception $e) {
+    echo "The following error occurred: " . $e->getMessage();
+}
+```
 
 You can take a look at the `sample/record.php` script provided inside this
 repository, or run it
@@ -136,22 +142,24 @@ repository, or run it
 The *properties* API is supposed to return the parsed WHOIS record for a
 domain:
 
-    <?php
+``` php
+<?php
 
-    use RoboWhois\RoboWhois;
-    use RoboWhois\Exception;
+use RoboWhois\RoboWhois;
+use RoboWhois\Exception;
 
-    require 'vendor/autoload.php';
+require 'vendor/autoload.php';
 
-    $robowhois = new RoboWhois('INSERT-YOUR-API-KEY-HERE');
+$robowhois = new RoboWhois('INSERT-YOUR-API-KEY-HERE');
 
-    try {
-        $domain = $robowhois->whoisProperties('robowhois.com');
+try {
+    $domain = $robowhois->whoisProperties('robowhois.com');
 
-        echo $domain['properties']['created_on'] . "\n";
-    } catch (Exception $e) {
-        echo "The following error occurred: " . $e->getMessage();
-    }
+    echo $domain['properties']['created_on'] . "\n";
+} catch (Exception $e) {
+    echo "The following error occurred: " . $e->getMessage();
+}
+```
 
 You can take a look at the `sample/properties.php` script provided inside this
 repository, or run it
@@ -163,22 +171,24 @@ repository, or run it
 The *parts* API is supposed to return  the WHOIS record for a domain without
 merging the one or more responses returned by the contacted WHOIS server(s):
 
-    <?php
+``` php
+<?php
 
-    use RoboWhois\RoboWhois;
-    use RoboWhois\Exception;
+use RoboWhois\RoboWhois;
+use RoboWhois\Exception;
 
-    require 'vendor/autoload.php';
+require 'vendor/autoload.php';
 
-    $robowhois = new RoboWhois('INSERT-YOUR-API-KEY-HERE');
+$robowhois = new RoboWhois('INSERT-YOUR-API-KEY-HERE');
 
-    try {
-        $domain = $robowhois->whoisParts('robowhois.com');
+try {
+    $domain = $robowhois->whoisParts('robowhois.com');
 
-        echo $domain['parts'][0]['body'] . "\n";
-    } catch (Exception $e) {
-        echo "The following error occurred: " . $e->getMessage();
-    }
+    echo $domain['parts'][0]['body'] . "\n";
+} catch (Exception $e) {
+    echo "The following error occurred: " . $e->getMessage();
+}
+```
 
 You can take a look at the `sample/parts.php` script provided inside this
 repository, or run it
@@ -190,32 +200,34 @@ repository, or run it
 The *availability* API is supposed to give a feedback about the registration of
 a particular domain:
 
-    <?php
+``` php
+<?php
 
-    use RoboWhois\RoboWhois;
-    use RoboWhois\Exception;
+use RoboWhois\RoboWhois;
+use RoboWhois\Exception;
 
-    require 'vendor/autoload.php';
+require 'vendor/autoload.php';
 
-    $robowhois = new RoboWhois('INSERT-YOUR-API-KEY-HERE');
+$robowhois = new RoboWhois('INSERT-YOUR-API-KEY-HERE');
 
-    try {
-        $domains = array(
-          'google.com', 'mycustomabsurddomainnamenooneeverregistered.ch'
-        );
+try {
+    $domains = array(
+      'google.com', 'mycustomabsurddomainnamenooneeverregistered.ch'
+    );
 
-        foreach ($domains as $domain) {
-            $availability = $robowhois->whoisAvailability($domain);
+    foreach ($domains as $domain) {
+        $availability = $robowhois->whoisAvailability($domain);
 
-            if ($availability['available']) {
-                echo sprintf("%s is available!", $domain) . "\n";
-            } else {
-                echo sprintf("%s is registered!", $domain) . "\n";
-            }
+        if ($availability['available']) {
+            echo sprintf("%s is available!", $domain) . "\n";
+        } else {
+            echo sprintf("%s is registered!", $domain) . "\n";
         }
-    } catch (Exception $e) {
-        echo "The following error occurred: " . $e->getMessage();
     }
+} catch (Exception $e) {
+    echo "The following error occurred: " . $e->getMessage();
+}
+```
 
 There are a couple convenient methods to quickly check a domain's availability:
 you can use `$robowhois->whoisAvailability($domain)` and
